@@ -1,46 +1,31 @@
-import { useEffect, useState, useCallback } from 'react';
-import { io, Socket } from 'socket.io-client';
+import { useEffect, useState } from 'react';
+import { SocketService } from '../services/socketService';
 import type { Order } from '../types/Order';
 
 export function Dashboard() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [connected, setConnected] = useState(false);
 
-  const connectSocket = useCallback(() => {
-    const socket: Socket = io('http://localhost:8080', {
-      reconnectionAttempts: 5,
-      reconnectionDelay: 1000,
-    });
-
-    socket.on('connect', () => {
-      setConnected(true);
-    });
-
-    socket.on('disconnect', () => {
-      setConnected(false);
-    });
-
-    socket.on('newOrder', (order: Order) => {
-      setOrders(prev => [...prev, order]);
-    });
-
-    socket.on('orderUpdate', (updatedOrder: Order) => {
-      setOrders(prev => 
-        prev.map(order => 
-          order.id === updatedOrder.id ? updatedOrder : order
-        )
-      );
-    });
-
-    return socket;
-  }, []);
-
   useEffect(() => {
-    const socket = connectSocket();
+    const socketService = new SocketService();
+
+    socketService.connect(
+      (newOrder) => {
+        setOrders(prev => [...prev, newOrder]);
+      },
+      (updatedOrder) => {
+        setOrders(prev => 
+          prev.map(order => 
+            order.id === updatedOrder.id ? updatedOrder : order
+          )
+        );
+      }
+    );
+
     return () => {
-      socket.disconnect();
+      socketService.disconnect();
     };
-  }, [connectSocket]);
+  }, []);
 
   return (
     <div>
