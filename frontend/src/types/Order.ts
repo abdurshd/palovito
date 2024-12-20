@@ -2,7 +2,7 @@ interface Order {
   id: string;
   foodName: string;
   quantity: number;
-  status: 'RECEIVED' | 'PROCESSING' | 'COMPLETED';
+  status: 'RECEIVED' | 'PROCESSING' | 'COMPLETED' | 'CANCELLED';
   timestamp: string;
 }
 

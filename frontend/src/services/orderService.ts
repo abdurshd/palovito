@@ -14,5 +14,45 @@ export const orderService = {
     } catch (error) {
       throw new Error('Failed to create order');
     }
+  },
+
+  getAllOrders: async (): Promise<Order[]> => {
+    try {
+      const response = await axios.get(`${API_URL}/order`);
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to fetch orders');
+    }
+  },
+
+  updateOrderStatus: async (orderId: string, status: Order['status']): Promise<Order> => {
+    try {
+      const response = await axios.patch(`${API_URL}/order/${orderId}/status`, {
+        status
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to update order status');
+    }
+  },
+
+  updateOrderQuantity: async (orderId: string, quantity: number): Promise<Order> => {
+    try {
+      const response = await axios.patch(`${API_URL}/order/${orderId}/quantity`, {
+        quantity
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to update order quantity');
+    }
+  },
+
+  cancelOrder: async (orderId: string): Promise<Order> => {
+    try {
+      const response = await axios.patch(`${API_URL}/order/${orderId}/cancel`);
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to cancel order');
+    }
   }
 }; 

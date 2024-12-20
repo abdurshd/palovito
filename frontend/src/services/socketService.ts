@@ -4,7 +4,12 @@ import type { Order } from '../types/Order';
 export class SocketService {
   private client: Client | null = null;
 
-  connect(onNewOrder: (order: Order) => void, onUpdateOrder: (order: Order) => void) {
+  connect(
+    onNewOrder: (order: Order) => void, 
+    onUpdateOrder: (order: Order) => void,
+    onDeleteOrder: (orderId: string) => void,
+    onConnect?: () => void
+  ) {
     this.client = new Client({
       brokerURL: 'ws://localhost:8080/ws',
       debug: (str) => {
@@ -15,12 +20,16 @@ export class SocketService {
       heartbeatOutgoing: 4000,
       onConnect: () => {
         console.log('Connected to WebSocket');
+        onConnect?.();
         if (this.client) {
           this.client.subscribe('/topic/orders', message => {
             onNewOrder(JSON.parse(message.body));
           });
           this.client.subscribe('/topic/orders/update', message => {
             onUpdateOrder(JSON.parse(message.body));
+          });
+          this.client.subscribe('/topic/orders/delete', message => {
+            onDeleteOrder(JSON.parse(message.body));
           });
         }
       },
