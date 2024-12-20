@@ -1,7 +1,7 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.4.1'
-	id 'io.spring.dependency-management' version '1.1.7'
+	id 'org.springframework.boot' version '3.2.3'
+	id 'io.spring.dependency-management' version '1.1.4'
 }
 
 group = 'com.rgt'
@@ -31,6 +31,26 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	
+	// Monitoring & Metrics
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'io.micrometer:micrometer-registry-prometheus'
+	
+	// Testing
+	testImplementation 'org.awaitility:awaitility:4.2.0'
+	testImplementation 'org.mockito:mockito-junit-jupiter'
+	
+	// Validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	
+	// Security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	
+	// Cache
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
+	
+	// Rate Limiting
+	implementation 'com.google.guava:guava:31.1-jre'
 }
 
 tasks.named('test') {

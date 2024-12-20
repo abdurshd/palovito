@@ -1,0 +1,192 @@
+2024-12-20T15:24:56.451+09:00  INFO 92954 --- [restaurant-service] [Test worker] c.r.r.RestaurantServiceApplicationTests  : Starting RestaurantServiceApplicationTests using Java 17.0.13 with PID 92954 (started by abdurashidakbarov in /Users/abdurashidakbarov/Dastur/RGT/backend)
+2024-12-20T15:24:56.453+09:00 DEBUG 92954 --- [restaurant-service] [Test worker] c.r.r.RestaurantServiceApplicationTests  : Running with Spring Boot v3.2.3, Spring v6.1.4
+2024-12-20T15:24:56.454+09:00  INFO 92954 --- [restaurant-service] [Test worker] c.r.r.RestaurantServiceApplicationTests  : No active profile set, falling back to 1 default profile: "default"
+2024-12-20T15:24:57.651+09:00  WARN 92954 --- [restaurant-service] [Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: c8024263-f940-424c-8a96-8842c934bf16
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-12-20T15:24:57.960+09:00  INFO 92954 --- [restaurant-service] [Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2024-12-20T15:24:57.997+09:00  INFO 92954 --- [restaurant-service] [Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1a785fd5, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4a660b34, org.springframework.security.web.context.SecurityContextHolderFilter@3af36922, org.springframework.security.web.header.HeaderWriterFilter@42730828, org.springframework.web.filter.CorsFilter@362a561e, org.springframework.security.web.authentication.logout.LogoutFilter@597a7afa, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@474e34e4, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7e2c6702, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2df3545d, org.springframework.security.web.access.ExceptionTranslationFilter@5e5a8718, org.springframework.security.web.access.intercept.AuthorizationFilter@4d43a1b7]
+2024-12-20T15:24:58.269+09:00  INFO 92954 --- [restaurant-service] [Test worker] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2024-12-20T15:24:58.270+09:00  INFO 92954 --- [restaurant-service] [Test worker] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@28fa541]]
+2024-12-20T15:24:58.271+09:00  INFO 92954 --- [restaurant-service] [Test worker] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2024-12-20T15:24:58.299+09:00  INFO 92954 --- [restaurant-service] [Test worker] c.r.r.RestaurantServiceApplicationTests  : Started RestaurantServiceApplicationTests in 2.168 seconds (process running for 3.3)
+2024-12-20T15:24:59.006+09:00  INFO 92954 --- [restaurant-service] [Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.rgt.restaurant.integration.OrderControllerIntegrationTest]: OrderControllerIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-12-20T15:24:59.010+09:00  INFO 92954 --- [restaurant-service] [Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.rgt.restaurant.RestaurantServiceApplication for test class com.rgt.restaurant.integration.OrderControllerIntegrationTest
+2024-12-20T15:24:59.027+09:00  INFO 92954 --- [restaurant-service] [Test worker] c.r.r.i.OrderControllerIntegrationTest   : Starting OrderControllerIntegrationTest using Java 17.0.13 with PID 92954 (started by abdurashidakbarov in /Users/abdurashidakbarov/Dastur/RGT/backend)
+2024-12-20T15:24:59.027+09:00 DEBUG 92954 --- [restaurant-service] [Test worker] c.r.r.i.OrderControllerIntegrationTest   : Running with Spring Boot v3.2.3, Spring v6.1.4
+2024-12-20T15:24:59.027+09:00  INFO 92954 --- [restaurant-service] [Test worker] c.r.r.i.OrderControllerIntegrationTest   : No active profile set, falling back to 1 default profile: "default"
+2024-12-20T15:24:59.311+09:00  INFO 92954 --- [restaurant-service] [Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
+2024-12-20T15:24:59.323+09:00  INFO 92954 --- [restaurant-service] [Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-12-20T15:24:59.323+09:00  INFO 92954 --- [restaurant-service] [Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2024-12-20T15:24:59.382+09:00  INFO 92954 --- [restaurant-service] [Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-12-20T15:24:59.383+09:00  INFO 92954 --- [restaurant-service] [Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 354 ms
+2024-12-20T15:24:59.535+09:00  WARN 92954 --- [restaurant-service] [Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: b53942c9-4ac3-4e58-bf87-5c7625314431
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-12-20T15:24:59.610+09:00  INFO 92954 --- [restaurant-service] [Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2024-12-20T15:24:59.626+09:00  INFO 92954 --- [restaurant-service] [Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@71634e64, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@65cc3902, org.springframework.security.web.context.SecurityContextHolderFilter@4e35a219, org.springframework.security.web.header.HeaderWriterFilter@2ad6aeb8, org.springframework.web.filter.CorsFilter@c79915a, org.springframework.security.web.authentication.logout.LogoutFilter@68af8288, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7772ec28, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@14d513ca, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6173863f, org.springframework.security.web.access.ExceptionTranslationFilter@8ad6d29, org.springframework.security.web.access.intercept.AuthorizationFilter@34ab398b]
+2024-12-20T15:24:59.703+09:00  INFO 92954 --- [restaurant-service] [Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 51136 (http) with context path ''
+2024-12-20T15:24:59.704+09:00  INFO 92954 --- [restaurant-service] [Test worker] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2024-12-20T15:24:59.707+09:00  INFO 92954 --- [restaurant-service] [Test worker] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@5b9df3b3]]
+2024-12-20T15:24:59.708+09:00  INFO 92954 --- [restaurant-service] [Test worker] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2024-12-20T15:24:59.726+09:00  INFO 92954 --- [restaurant-service] [Test worker] c.r.r.i.OrderControllerIntegrationTest   : Started OrderControllerIntegrationTest in 0.714 seconds (process running for 4.727)
+2024-12-20T15:24:59.839+09:00  INFO 92954 --- [restaurant-service] [http-nio-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-20T15:24:59.839+09:00  INFO 92954 --- [restaurant-service] [http-nio-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-12-20T15:24:59.841+09:00  INFO 92954 --- [restaurant-service] [http-nio-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-12-20T15:24:59.915+09:00  INFO 92954 --- [restaurant-service] [http-nio-auto-1-exec-1] c.rgt.restaurant.service.OrderService    : Creating new order - Food: Pizza, Quantity: 2
+2024-12-20T15:24:59.917+09:00  INFO 92954 --- [restaurant-service] [http-nio-auto-1-exec-1] c.rgt.restaurant.service.OrderService    : Order created successfully - ID: 3e22ddf6-0f9a-4ad1-a0f5-617f1895c2e8
+2024-12-20T15:24:59.933+09:00  INFO 92954 --- [restaurant-service] [ForkJoinPool.commonPool-worker-1] c.rgt.restaurant.service.OrderService    : Starting order processing - ID: 3e22ddf6-0f9a-4ad1-a0f5-617f1895c2e8
+2024-12-20T15:25:00.318+09:00  INFO 92954 --- [restaurant-service] [Test worker] c.rgt.restaurant.service.OrderService    : Creating new order - Food: Pizza, Quantity: 2
+2024-12-20T15:25:00.319+09:00  INFO 92954 --- [restaurant-service] [Test worker] c.rgt.restaurant.service.OrderService    : Order created successfully - ID: 2f0a7686-fa86-4bf6-b12e-3a0f879008be
+2024-12-20T15:25:00.360+09:00  INFO 92954 --- [restaurant-service] [ForkJoinPool.commonPool-worker-2] c.rgt.restaurant.service.OrderService    : Starting order processing - ID: 2f0a7686-fa86-4bf6-b12e-3a0f879008be
+2024-12-20T15:25:00.360+09:00  INFO 92954 --- [restaurant-service] [ForkJoinPool.commonPool-worker-2] c.rgt.restaurant.service.OrderService    : Order status updated to PROCESSING - ID: 2f0a7686-fa86-4bf6-b12e-3a0f879008be
+2024-12-20T15:25:00.361+09:00  INFO 92954 --- [restaurant-service] [ForkJoinPool.commonPool-worker-2] c.rgt.restaurant.service.OrderService    : Order completed successfully - ID: 2f0a7686-fa86-4bf6-b12e-3a0f879008be
+2024-12-20T15:25:00.385+09:00  INFO 92954 --- [restaurant-service] [Test worker] c.rgt.restaurant.service.OrderService    : Creating new order - Food: , Quantity: -1
+2024-12-20T15:25:00.386+09:00 ERROR 92954 --- [restaurant-service] [Test worker] c.rgt.restaurant.service.OrderService    : Invalid order data - Food: , Quantity: -1
+2024-12-20T15:25:00.393+09:00  INFO 92954 --- [restaurant-service] [Test worker] c.rgt.restaurant.service.OrderService    : Creating new order - Food: Pizza, Quantity: 2
+2024-12-20T15:25:00.394+09:00  INFO 92954 --- [restaurant-service] [Test worker] c.rgt.restaurant.service.OrderService    : Order created successfully - ID: 2dc6cb5d-f2d0-4f8e-8aab-55e35f449a10
+2024-12-20T15:25:00.394+09:00  INFO 92954 --- [restaurant-service] [ForkJoinPool.commonPool-worker-2] c.rgt.restaurant.service.OrderService    : Starting order processing - ID: 2dc6cb5d-f2d0-4f8e-8aab-55e35f449a10
+2024-12-20T15:25:00.395+09:00  INFO 92954 --- [restaurant-service] [ForkJoinPool.commonPool-worker-2] c.rgt.restaurant.service.OrderService    : Order status updated to PROCESSING - ID: 2dc6cb5d-f2d0-4f8e-8aab-55e35f449a10
+2024-12-20T15:25:00.395+09:00  INFO 92954 --- [restaurant-service] [ForkJoinPool.commonPool-worker-2] c.rgt.restaurant.service.OrderService    : Order completed successfully - ID: 2dc6cb5d-f2d0-4f8e-8aab-55e35f449a10
+2024-12-20T15:25:00.554+09:00  INFO 92954 --- [restaurant-service] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopping...
+2024-12-20T15:25:00.555+09:00  INFO 92954 --- [restaurant-service] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@28fa541]]
+2024-12-20T15:25:00.555+09:00  INFO 92954 --- [restaurant-service] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopped.
+2024-12-20T15:25:00.567+09:00  INFO 92954 --- [restaurant-service] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopping...
+2024-12-20T15:25:00.567+09:00  INFO 92954 --- [restaurant-service] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@5b9df3b3]]
+2024-12-20T15:25:00.567+09:00  INFO 92954 --- [restaurant-service] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopped.
+2024-12-20T15:29:16.628+09:00  INFO 93695 --- [restaurant-service] [Test worker] c.r.r.RestaurantServiceApplicationTests  : Starting RestaurantServiceApplicationTests using Java 17.0.13 with PID 93695 (started by abdurashidakbarov in /Users/abdurashidakbarov/Dastur/RGT/backend)
+2024-12-20T15:29:16.629+09:00 DEBUG 93695 --- [restaurant-service] [Test worker] c.r.r.RestaurantServiceApplicationTests  : Running with Spring Boot v3.2.3, Spring v6.1.4
+2024-12-20T15:29:16.629+09:00  INFO 93695 --- [restaurant-service] [Test worker] c.r.r.RestaurantServiceApplicationTests  : No active profile set, falling back to 1 default profile: "default"
+2024-12-20T15:29:17.539+09:00  WARN 93695 --- [restaurant-service] [Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: d772b7c4-491f-4ae4-8acb-ec872fc42003
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-12-20T15:29:17.798+09:00  INFO 93695 --- [restaurant-service] [Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2024-12-20T15:29:17.835+09:00  INFO 93695 --- [restaurant-service] [Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@de63949, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5c5c784c, org.springframework.security.web.context.SecurityContextHolderFilter@675230cd, org.springframework.security.web.header.HeaderWriterFilter@2d5c160e, org.springframework.web.filter.CorsFilter@6a299b9d, org.springframework.security.web.authentication.logout.LogoutFilter@4be7acd9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7dc92a06, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2419a5db, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@363fe35a, org.springframework.security.web.access.ExceptionTranslationFilter@54f9326c, org.springframework.security.web.access.intercept.AuthorizationFilter@48333b12]
+2024-12-20T15:29:18.066+09:00  INFO 93695 --- [restaurant-service] [Test worker] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2024-12-20T15:29:18.066+09:00  INFO 93695 --- [restaurant-service] [Test worker] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@43efe064]]
+2024-12-20T15:29:18.067+09:00  INFO 93695 --- [restaurant-service] [Test worker] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2024-12-20T15:29:18.080+09:00  INFO 93695 --- [restaurant-service] [Test worker] c.r.r.RestaurantServiceApplicationTests  : Started RestaurantServiceApplicationTests in 1.616 seconds (process running for 3.177)
+2024-12-20T15:29:18.130+09:00  INFO 93695 --- [restaurant-service] [Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.rgt.restaurant.integration.OrderControllerIntegrationTest]: OrderControllerIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-12-20T15:29:18.134+09:00  INFO 93695 --- [restaurant-service] [Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.rgt.restaurant.RestaurantServiceApplication for test class com.rgt.restaurant.integration.OrderControllerIntegrationTest
+2024-12-20T15:29:18.164+09:00  INFO 93695 --- [restaurant-service] [Test worker] c.r.r.i.OrderControllerIntegrationTest   : Starting OrderControllerIntegrationTest using Java 17.0.13 with PID 93695 (started by abdurashidakbarov in /Users/abdurashidakbarov/Dastur/RGT/backend)
+2024-12-20T15:29:18.165+09:00 DEBUG 93695 --- [restaurant-service] [Test worker] c.r.r.i.OrderControllerIntegrationTest   : Running with Spring Boot v3.2.3, Spring v6.1.4
+2024-12-20T15:29:18.165+09:00  INFO 93695 --- [restaurant-service] [Test worker] c.r.r.i.OrderControllerIntegrationTest   : No active profile set, falling back to 1 default profile: "default"
+2024-12-20T15:29:18.422+09:00  INFO 93695 --- [restaurant-service] [Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
+2024-12-20T15:29:18.429+09:00  INFO 93695 --- [restaurant-service] [Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-12-20T15:29:18.429+09:00  INFO 93695 --- [restaurant-service] [Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2024-12-20T15:29:18.470+09:00  INFO 93695 --- [restaurant-service] [Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-12-20T15:29:18.471+09:00  INFO 93695 --- [restaurant-service] [Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 304 ms
+2024-12-20T15:29:18.561+09:00  WARN 93695 --- [restaurant-service] [Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: bbb948f8-cb51-462a-934a-c2e01ea10ecb
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-12-20T15:29:18.618+09:00  INFO 93695 --- [restaurant-service] [Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2024-12-20T15:29:18.633+09:00  INFO 93695 --- [restaurant-service] [Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4a76c90, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6a233d33, org.springframework.security.web.context.SecurityContextHolderFilter@28dd038f, org.springframework.security.web.header.HeaderWriterFilter@20843604, org.springframework.web.filter.CorsFilter@7da0587a, org.springframework.security.web.authentication.logout.LogoutFilter@5cb64b9c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@31d8352e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1d82d35c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@78d52d4c, org.springframework.security.web.access.ExceptionTranslationFilter@2f006edf, org.springframework.security.web.access.intercept.AuthorizationFilter@27244a88]
+2024-12-20T15:29:18.703+09:00  INFO 93695 --- [restaurant-service] [Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 51298 (http) with context path ''
+2024-12-20T15:29:18.704+09:00  INFO 93695 --- [restaurant-service] [Test worker] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2024-12-20T15:29:18.704+09:00  INFO 93695 --- [restaurant-service] [Test worker] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@798d8247]]
+2024-12-20T15:29:18.704+09:00  INFO 93695 --- [restaurant-service] [Test worker] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2024-12-20T15:29:18.709+09:00  INFO 93695 --- [restaurant-service] [Test worker] c.r.r.i.OrderControllerIntegrationTest   : Started OrderControllerIntegrationTest in 0.573 seconds (process running for 3.806)
+2024-12-20T15:29:18.796+09:00  INFO 93695 --- [restaurant-service] [http-nio-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-20T15:29:18.796+09:00  INFO 93695 --- [restaurant-service] [http-nio-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-12-20T15:29:18.797+09:00  INFO 93695 --- [restaurant-service] [http-nio-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2024-12-20T15:29:18.829+09:00  INFO 93695 --- [restaurant-service] [http-nio-auto-1-exec-1] c.rgt.restaurant.service.OrderService    : Creating new order - Food: Pizza, Quantity: 2
+2024-12-20T15:29:18.829+09:00  INFO 93695 --- [restaurant-service] [http-nio-auto-1-exec-1] c.rgt.restaurant.service.OrderService    : Order created successfully - ID: 4afb1044-2387-4133-a951-9be6b314bb8a
+2024-12-20T15:29:18.834+09:00  INFO 93695 --- [restaurant-service] [ForkJoinPool.commonPool-worker-1] c.rgt.restaurant.service.OrderService    : Starting order processing - ID: 4afb1044-2387-4133-a951-9be6b314bb8a
+2024-12-20T15:29:18.849+09:00  INFO 93695 --- [restaurant-service] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopping...
+2024-12-20T15:29:18.849+09:00  INFO 93695 --- [restaurant-service] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@43efe064]]
+2024-12-20T15:29:18.850+09:00  INFO 93695 --- [restaurant-service] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopped.
+2024-12-20T15:29:18.853+09:00  INFO 93695 --- [restaurant-service] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopping...
+2024-12-20T15:29:18.853+09:00  INFO 93695 --- [restaurant-service] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@798d8247]]
+2024-12-20T15:29:18.853+09:00  INFO 93695 --- [restaurant-service] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopped.
+2024-12-20T15:29:39.931+09:00  INFO 93769 --- [restaurant-service] [Test worker] c.r.r.RestaurantServiceApplicationTests  : Starting RestaurantServiceApplicationTests using Java 17.0.13 with PID 93769 (started by abdurashidakbarov in /Users/abdurashidakbarov/Dastur/RGT/backend)
+2024-12-20T15:29:39.931+09:00 DEBUG 93769 --- [restaurant-service] [Test worker] c.r.r.RestaurantServiceApplicationTests  : Running with Spring Boot v3.2.3, Spring v6.1.4
+2024-12-20T15:29:39.932+09:00  INFO 93769 --- [restaurant-service] [Test worker] c.r.r.RestaurantServiceApplicationTests  : No active profile set, falling back to 1 default profile: "default"
+2024-12-20T15:29:40.795+09:00  WARN 93769 --- [restaurant-service] [Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: da28d151-633d-4490-bec7-a60b50551ef4
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-12-20T15:29:41.055+09:00  INFO 93769 --- [restaurant-service] [Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2024-12-20T15:29:41.093+09:00  INFO 93769 --- [restaurant-service] [Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5cf0673d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@40c76f5a, org.springframework.security.web.context.SecurityContextHolderFilter@4ce267cc, org.springframework.security.web.header.HeaderWriterFilter@5fb7ab9c, org.springframework.web.filter.CorsFilter@a323a5b, org.springframework.security.web.authentication.logout.LogoutFilter@5599b5bb, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6ee37ca7, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6775c0d1, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5546e754, org.springframework.security.web.access.ExceptionTranslationFilter@91a2543, org.springframework.security.web.access.intercept.AuthorizationFilter@75ad30c1]
+2024-12-20T15:29:41.404+09:00  INFO 93769 --- [restaurant-service] [Test worker] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2024-12-20T15:29:41.404+09:00  INFO 93769 --- [restaurant-service] [Test worker] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@2211b44f]]
+2024-12-20T15:29:41.405+09:00  INFO 93769 --- [restaurant-service] [Test worker] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2024-12-20T15:29:41.419+09:00  INFO 93769 --- [restaurant-service] [Test worker] c.r.r.RestaurantServiceApplicationTests  : Started RestaurantServiceApplicationTests in 1.633 seconds (process running for 2.29)
+2024-12-20T15:29:41.979+09:00  INFO 93769 --- [restaurant-service] [Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.rgt.restaurant.integration.OrderControllerIntegrationTest]: OrderControllerIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-12-20T15:29:41.983+09:00  INFO 93769 --- [restaurant-service] [Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.rgt.restaurant.RestaurantServiceApplication for test class com.rgt.restaurant.integration.OrderControllerIntegrationTest
+2024-12-20T15:29:42.000+09:00  INFO 93769 --- [restaurant-service] [Test worker] c.r.r.i.OrderControllerIntegrationTest   : Starting OrderControllerIntegrationTest using Java 17.0.13 with PID 93769 (started by abdurashidakbarov in /Users/abdurashidakbarov/Dastur/RGT/backend)
+2024-12-20T15:29:42.000+09:00 DEBUG 93769 --- [restaurant-service] [Test worker] c.r.r.i.OrderControllerIntegrationTest   : Running with Spring Boot v3.2.3, Spring v6.1.4
+2024-12-20T15:29:42.000+09:00  INFO 93769 --- [restaurant-service] [Test worker] c.r.r.i.OrderControllerIntegrationTest   : No active profile set, falling back to 1 default profile: "default"
+2024-12-20T15:29:42.220+09:00  INFO 93769 --- [restaurant-service] [Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
+2024-12-20T15:29:42.227+09:00  INFO 93769 --- [restaurant-service] [Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-12-20T15:29:42.228+09:00  INFO 93769 --- [restaurant-service] [Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2024-12-20T15:29:42.262+09:00  INFO 93769 --- [restaurant-service] [Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-12-20T15:29:42.262+09:00  INFO 93769 --- [restaurant-service] [Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 261 ms
+2024-12-20T15:29:42.372+09:00  WARN 93769 --- [restaurant-service] [Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 13d25fe3-559f-439b-aca5-fe5b976078aa
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-12-20T15:29:42.429+09:00  INFO 93769 --- [restaurant-service] [Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2024-12-20T15:29:42.448+09:00  INFO 93769 --- [restaurant-service] [Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@33845e3d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7e615c6a, org.springframework.security.web.context.SecurityContextHolderFilter@71634e64, org.springframework.security.web.header.HeaderWriterFilter@34ab398b, org.springframework.web.filter.CorsFilter@3662c887, org.springframework.security.web.authentication.logout.LogoutFilter@a08e41b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@65cc3902, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@c79915a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@23119bc3, org.springframework.security.web.access.ExceptionTranslationFilter@8dc3019, org.springframework.security.web.access.intercept.AuthorizationFilter@4ebb7bab]
+2024-12-20T15:29:42.527+09:00  INFO 93769 --- [restaurant-service] [Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 51373 (http) with context path ''
+2024-12-20T15:29:42.527+09:00  INFO 93769 --- [restaurant-service] [Test worker] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2024-12-20T15:29:42.527+09:00  INFO 93769 --- [restaurant-service] [Test worker] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@1ae23815]]
+2024-12-20T15:29:42.528+09:00  INFO 93769 --- [restaurant-service] [Test worker] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2024-12-20T15:29:42.533+09:00  INFO 93769 --- [restaurant-service] [Test worker] c.r.r.i.OrderControllerIntegrationTest   : Started OrderControllerIntegrationTest in 0.548 seconds (process running for 3.405)
+2024-12-20T15:29:42.633+09:00  INFO 93769 --- [restaurant-service] [http-nio-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-20T15:29:42.633+09:00  INFO 93769 --- [restaurant-service] [http-nio-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-12-20T15:29:42.634+09:00  INFO 93769 --- [restaurant-service] [http-nio-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-12-20T15:29:42.668+09:00  INFO 93769 --- [restaurant-service] [http-nio-auto-1-exec-1] c.rgt.restaurant.service.OrderService    : Creating new order - Food: Pizza, Quantity: 2
+2024-12-20T15:29:42.670+09:00  INFO 93769 --- [restaurant-service] [http-nio-auto-1-exec-1] c.rgt.restaurant.service.OrderService    : Order created successfully - ID: 0a43d2f0-fbef-470f-aa8c-cbd1a9986b76
+2024-12-20T15:29:42.675+09:00  INFO 93769 --- [restaurant-service] [ForkJoinPool.commonPool-worker-1] c.rgt.restaurant.service.OrderService    : Starting order processing - ID: 0a43d2f0-fbef-470f-aa8c-cbd1a9986b76
+2024-12-20T15:29:42.852+09:00  INFO 93769 --- [restaurant-service] [Test worker] c.rgt.restaurant.service.OrderService    : Creating new order - Food: Pizza, Quantity: 2
+2024-12-20T15:29:42.853+09:00  INFO 93769 --- [restaurant-service] [Test worker] c.rgt.restaurant.service.OrderService    : Order created successfully - ID: 0b3edc4c-262a-4fcf-8002-7ed449663dad
+2024-12-20T15:29:42.879+09:00  INFO 93769 --- [restaurant-service] [ForkJoinPool.commonPool-worker-2] c.rgt.restaurant.service.OrderService    : Starting order processing - ID: 0b3edc4c-262a-4fcf-8002-7ed449663dad
+2024-12-20T15:29:42.880+09:00  INFO 93769 --- [restaurant-service] [ForkJoinPool.commonPool-worker-2] c.rgt.restaurant.service.OrderService    : Order status updated to PROCESSING - ID: 0b3edc4c-262a-4fcf-8002-7ed449663dad
+2024-12-20T15:29:42.881+09:00  INFO 93769 --- [restaurant-service] [ForkJoinPool.commonPool-worker-2] c.rgt.restaurant.service.OrderService    : Order completed successfully - ID: 0b3edc4c-262a-4fcf-8002-7ed449663dad
+2024-12-20T15:29:42.902+09:00  INFO 93769 --- [restaurant-service] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopping...
+2024-12-20T15:29:42.902+09:00  INFO 93769 --- [restaurant-service] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@2211b44f]]
+2024-12-20T15:29:42.903+09:00  INFO 93769 --- [restaurant-service] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopped.
+2024-12-20T15:29:42.915+09:00  INFO 93769 --- [restaurant-service] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopping...
+2024-12-20T15:29:42.915+09:00  INFO 93769 --- [restaurant-service] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@1ae23815]]
+2024-12-20T15:29:42.915+09:00  INFO 93769 --- [restaurant-service] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopped.
+2024-12-20T15:31:24.026+09:00  INFO 93928 --- [restaurant-service] [restartedMain] c.r.r.RestaurantServiceApplication       : Starting RestaurantServiceApplication using Java 17.0.13 with PID 93928 (/Users/abdurashidakbarov/Dastur/RGT/backend/build/classes/java/main started by abdurashidakbarov in /Users/abdurashidakbarov/Dastur/RGT/backend)
+2024-12-20T15:31:24.027+09:00 DEBUG 93928 --- [restaurant-service] [restartedMain] c.r.r.RestaurantServiceApplication       : Running with Spring Boot v3.2.3, Spring v6.1.4
+2024-12-20T15:31:24.027+09:00  INFO 93928 --- [restaurant-service] [restartedMain] c.r.r.RestaurantServiceApplication       : No active profile set, falling back to 1 default profile: "default"
+2024-12-20T15:31:24.062+09:00  INFO 93928 --- [restaurant-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-12-20T15:31:24.062+09:00  INFO 93928 --- [restaurant-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-12-20T15:31:24.818+09:00  INFO 93928 --- [restaurant-service] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-12-20T15:31:24.825+09:00  INFO 93928 --- [restaurant-service] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-12-20T15:31:24.825+09:00  INFO 93928 --- [restaurant-service] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2024-12-20T15:31:24.854+09:00  INFO 93928 --- [restaurant-service] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-12-20T15:31:24.854+09:00  INFO 93928 --- [restaurant-service] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 792 ms
+2024-12-20T15:31:25.044+09:00  WARN 93928 --- [restaurant-service] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 67766cc6-0796-4dec-94c1-70e076964fb1
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-12-20T15:31:25.217+09:00  INFO 93928 --- [restaurant-service] [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoint(s) beneath base path '/actuator'
+2024-12-20T15:31:25.252+09:00  INFO 93928 --- [restaurant-service] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@30344a3c, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@27d6800d, org.springframework.security.web.context.SecurityContextHolderFilter@4fe1e880, org.springframework.security.web.header.HeaderWriterFilter@560ca01c, org.springframework.web.filter.CorsFilter@bbe296e, org.springframework.security.web.authentication.logout.LogoutFilter@28c6329f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@322da6ab, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5ba63fa3, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5e4718d6, org.springframework.security.web.access.ExceptionTranslationFilter@acab55a, org.springframework.security.web.access.intercept.AuthorizationFilter@5939c98e]
+2024-12-20T15:31:25.389+09:00  INFO 93928 --- [restaurant-service] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-12-20T15:31:25.424+09:00  INFO 93928 --- [restaurant-service] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-12-20T15:31:25.425+09:00  INFO 93928 --- [restaurant-service] [restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2024-12-20T15:31:25.425+09:00  INFO 93928 --- [restaurant-service] [restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@317dbfad]]
+2024-12-20T15:31:25.425+09:00  INFO 93928 --- [restaurant-service] [restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2024-12-20T15:31:25.444+09:00  INFO 93928 --- [restaurant-service] [restartedMain] c.r.r.RestaurantServiceApplication       : Started RestaurantServiceApplication in 1.644 seconds (process running for 1.892)
+2024-12-20T15:32:25.413+09:00  INFO 93928 --- [restaurant-service] [MessageBroker-2] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 3, active threads = 1, queued tasks = 1, completed tasks = 1]

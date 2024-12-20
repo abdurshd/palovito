@@ -22,6 +22,9 @@ export function Dashboard() {
       }
     );
 
+    socketService.onConnect(() => setConnected(true));
+    socketService.onDisconnect(() => setConnected(false));
+
     return () => {
       socketService.disconnect();
     };
