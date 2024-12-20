@@ -1,46 +1,39 @@
-import { io, Socket } from 'socket.io-client';
+import { Client } from '@stomp/stompjs';
 import type { Order } from '../types/Order';
 
 export class SocketService {
-  private socket: Socket | null = null;
-  private connectHandler: (() => void) | null = null;
-  private disconnectHandler: (() => void) | null = null;
+  private client: Client | null = null;
 
   connect(onNewOrder: (order: Order) => void, onUpdateOrder: (order: Order) => void) {
-    this.socket = io(import.meta.env.VITE_WEBSOCKET_URL || 'http://localhost:3000');
-
-    this.socket.on('connect', () => {
-      console.log('Connected to WebSocket server');
-      this.connectHandler?.();
+    this.client = new Client({
+      brokerURL: 'ws://localhost:8080/ws',
+      debug: (str) => {
+        console.log('STOMP: ' + str);
+      },
+      reconnectDelay: 5000,
+      heartbeatIncoming: 4000,
+      heartbeatOutgoing: 4000,
+      onConnect: () => {
+        console.log('Connected to WebSocket');
+        if (this.client) {
+          this.client.subscribe('/topic/orders', message => {
+            onNewOrder(JSON.parse(message.body));
+          });
+          this.client.subscribe('/topic/orders/update', message => {
+            onUpdateOrder(JSON.parse(message.body));
+          });
+        }
+      },
+      onStompError: (frame) => {
+        console.error('STOMP error', frame);
+      }
     });
 
-    this.socket.on('disconnect', () => {
-      console.log('Disconnected from WebSocket server');
-      this.disconnectHandler?.();
-    });
-
-    this.socket.on('newOrder', onNewOrder);
-    this.socket.on('updateOrder', onUpdateOrder);
-  }
-
-  onConnect(handler: () => void) {
-    this.connectHandler = handler;
-    // If already connected, call handler immediately
-    if (this.socket?.connected) {
-      handler();
-    }
-  }
-
-  onDisconnect(handler: () => void) {
-    this.disconnectHandler = handler;
+    this.client.activate();
   }
 
   disconnect() {
-    if (this.socket) {
-      this.socket.disconnect();
-      this.socket = null;
-    }
-    this.connectHandler = null;
-    this.disconnectHandler = null;
+    this.client?.deactivate();
+    this.client = null;
   }
 } 

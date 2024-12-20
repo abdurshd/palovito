@@ -12,6 +12,7 @@ export function Dashboard() {
     socketService.connect(
       (newOrder) => {
         setOrders(prev => [...prev, newOrder]);
+        setConnected(true);
       },
       (updatedOrder) => {
         setOrders(prev => 
@@ -22,11 +23,9 @@ export function Dashboard() {
       }
     );
 
-    socketService.onConnect(() => setConnected(true));
-    socketService.onDisconnect(() => setConnected(false));
-
     return () => {
       socketService.disconnect();
+      setConnected(false);
     };
   }, []);
 
