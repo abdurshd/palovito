@@ -6,6 +6,10 @@ import { useToast } from './ui/use-toast';
 import { Button } from './ui/button';
 import { Select } from './ui/select';
 
+// TODO: Add pages folder and move this file to it
+// TODO: Add a new component called MenuCard.tsx and move the MenuList component to it
+// TODO: Add a new component called MenuForm.tsx and move the MenuForm component to it
+
 export function MenuList() {
   const { toast } = useToast();
   const [menus, setMenus] = useState<Menu[]>([]);

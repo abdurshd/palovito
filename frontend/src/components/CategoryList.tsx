@@ -16,6 +16,11 @@ import {
 } from './ui/alert-dialog';
 import { CategoryEditDialog } from './CategoryEditDialog';
 
+// TODO: Add pages folder and move this file to it
+// TODO: Add a new component called CategoryCard.tsx and move the CategoryList component to it
+// TODO: Add a new component called CategoryForm.tsx and move the CategoryForm component to it
+// TODO: make beautiful category list
+
 export function CategoryList() {
   const { toast } = useToast();
   const [categories, setCategories] = useState<Category[]>([]);

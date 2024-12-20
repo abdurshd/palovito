@@ -9,6 +9,10 @@ import { menuService } from '../services/menuService';
 import { categoryService } from '../services/categoryService';
 import type { Category } from '../types/Menu';
 
+// TODO: Add pages folder and move this file to it
+// TODO: Add a borders for the form area and make it beautiful
+// TODO: add error handling for the form, and toast messages for succussful and failed operations
+
 export function MenuForm() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
