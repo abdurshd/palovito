@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Menu, X, ChevronLeft, ChevronRight, ClipboardList, LayoutDashboard } from 'lucide-react';
+import { Menu, X, ChevronLeft, ChevronRight, ClipboardList, LayoutDashboard, UtensilsCrossed, ListPlus } from 'lucide-react';
 
 export function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
@@ -55,6 +55,30 @@ export function Sidebar() {
             >
               <LayoutDashboard size={20} />
               {isOpen && <span>Dashboard</span>}
+            </NavLink>
+            <NavLink
+              to="/menu/categories"
+              className={({ isActive }) => isActive ? activeLinkClass : linkClass}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <ListPlus size={20} />
+              {isOpen && <span>Categories</span>}
+            </NavLink>
+            <NavLink
+              to="/menu/items"
+              className={({ isActive }) => isActive ? activeLinkClass : linkClass}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <UtensilsCrossed size={20} />
+              {isOpen && <span>Menu Items</span>}
+            </NavLink>
+            <NavLink
+              to="/menu/list"
+              className={({ isActive }) => isActive ? activeLinkClass : linkClass}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <UtensilsCrossed size={20} />
+              {isOpen && <span>View Menu</span>}
             </NavLink>
           </nav>
         </div>
