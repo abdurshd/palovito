@@ -13,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/menu")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class MenuController {
     private final MenuService menuService;
 

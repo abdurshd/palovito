@@ -14,7 +14,6 @@ import com.rgt.restaurant.model.OrderRequest;
 @RestController
 @RequestMapping("/api/order")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class OrderController {
 
     private final OrderService orderService;

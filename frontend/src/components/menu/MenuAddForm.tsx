@@ -74,73 +74,105 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input
-              placeholder="Name"
-              value={formData.name}
-              onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-              required
-            />
-            <Select
-              value={formData.categoryId}
-              onValueChange={(value) => setFormData(prev => ({ ...prev, categoryId: value }))}
-              required
-            >
-              <option value="">Select Category</option>
-              {categories.map(category => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </Select>
+            <div className="space-y-2">
+              <label htmlFor="name" className="text-sm font-medium">Name</label>
+              <Input
+                id="name"
+                placeholder="Name"
+                value={formData.name}
+                onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="category" className="text-sm font-medium">Category</label>
+              <Select
+                id="category"
+                value={formData.categoryId}
+                onValueChange={(value) => setFormData(prev => ({ ...prev, categoryId: value }))}
+                required
+              >
+                <option value="">Select Category</option>
+                {categories.map(category => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </Select>
+            </div>
           </div>
 
-          <Textarea
-            placeholder="Description"
-            value={formData.description}
-            onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-            required
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input
-              type="number"
-              placeholder="Price"
-              value={formData.price}
-              onChange={(e) => setFormData(prev => ({ ...prev, price: parseFloat(e.target.value) }))}
+          <div className="space-y-2">
+            <label htmlFor="description" className="text-sm font-medium">Description</label>
+            <Textarea
+              id="description"
+              placeholder="Description"
+              value={formData.description}
+              onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
               required
-              min="0"
-              step="0.01"
-            />
-            <Input
-              placeholder="Image URL"
-              value={formData.imageUrl}
-              onChange={(e) => setFormData(prev => ({ ...prev, imageUrl: e.target.value }))}
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input
-              type="number"
-              placeholder="Preparation Time (minutes)"
-              value={formData.preparationTime}
-              onChange={(e) => setFormData(prev => ({ ...prev, preparationTime: parseInt(e.target.value) }))}
-              min="0"
-            />
-            <Input
-              type="number"
-              placeholder="Spicy Level (0-5)"
-              value={formData.spicyLevel}
-              onChange={(e) => setFormData(prev => ({ ...prev, spicyLevel: parseInt(e.target.value) }))}
-              min="0"
-              max="5"
-            />
+            <div className="space-y-2">
+              <label htmlFor="price" className="text-sm font-medium">Price ($)</label>
+              <Input
+                id="price"
+                type="number"
+                placeholder="Price"
+                value={formData.price}
+                onChange={(e) => setFormData(prev => ({ ...prev, price: parseFloat(e.target.value) }))}
+                required
+                min="0"
+                step="0.01"
+              />
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="imageUrl" className="text-sm font-medium">Image URL</label>
+              <Input
+                id="imageUrl"
+                placeholder="Image URL"
+                value={formData.imageUrl}
+                onChange={(e) => setFormData(prev => ({ ...prev, imageUrl: e.target.value }))}
+              />
+            </div>
           </div>
 
-          <Input
-            placeholder="Allergens (comma-separated)"
-            value={formData.allergens}
-            onChange={(e) => setFormData(prev => ({ ...prev, allergens: e.target.value }))}
-          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label htmlFor="prepTime" className="text-sm font-medium">Preparation Time (minutes)</label>
+              <Input
+                id="prepTime"
+                type="number"
+                placeholder="Preparation Time"
+                value={formData.preparationTime}
+                onChange={(e) => setFormData(prev => ({ ...prev, preparationTime: parseInt(e.target.value) }))}
+                min="0"
+              />
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="spicyLevel" className="text-sm font-medium">Spicy Level (0-5)</label>
+              <Input
+                id="spicyLevel"
+                type="number"
+                placeholder="Spicy Level"
+                value={formData.spicyLevel}
+                onChange={(e) => setFormData(prev => ({ ...prev, spicyLevel: parseInt(e.target.value) }))}
+                min="0"
+                max="5"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="allergens" className="text-sm font-medium">Allergens</label>
+            <Input
+              id="allergens"
+              placeholder="Allergens (comma-separated)"
+              value={formData.allergens}
+              onChange={(e) => setFormData(prev => ({ ...prev, allergens: e.target.value }))}
+            />
+          </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="flex items-center justify-between">
@@ -162,46 +194,62 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
           <div className="space-y-4">
             <h3 className="text-sm font-medium">Nutritional Information</h3>
             <div className="grid grid-cols-2 gap-4">
-              <Input
-                type="number"
-                placeholder="Calories"
-                value={formData.nutritionalInfo.calories}
-                onChange={(e) => setFormData(prev => ({
-                  ...prev,
-                  nutritionalInfo: { ...prev.nutritionalInfo, calories: parseInt(e.target.value) }
-                }))}
-                min="0"
-              />
-              <Input
-                type="number"
-                placeholder="Protein (g)"
-                value={formData.nutritionalInfo.protein}
-                onChange={(e) => setFormData(prev => ({
-                  ...prev,
-                  nutritionalInfo: { ...prev.nutritionalInfo, protein: parseInt(e.target.value) }
-                }))}
-                min="0"
-              />
-              <Input
-                type="number"
-                placeholder="Carbs (g)"
-                value={formData.nutritionalInfo.carbs}
-                onChange={(e) => setFormData(prev => ({
-                  ...prev,
-                  nutritionalInfo: { ...prev.nutritionalInfo, carbs: parseInt(e.target.value) }
-                }))}
-                min="0"
-              />
-              <Input
-                type="number"
-                placeholder="Fats (g)"
-                value={formData.nutritionalInfo.fats}
-                onChange={(e) => setFormData(prev => ({
-                  ...prev,
-                  nutritionalInfo: { ...prev.nutritionalInfo, fats: parseInt(e.target.value) }
-                }))}
-                min="0"
-              />
+              <div className="space-y-2">
+                <label htmlFor="calories" className="text-sm font-medium">Calories</label>
+                <Input
+                  id="calories"
+                  type="number"
+                  placeholder="Calories"
+                  value={formData.nutritionalInfo.calories}
+                  onChange={(e) => setFormData(prev => ({
+                    ...prev,
+                    nutritionalInfo: { ...prev.nutritionalInfo, calories: parseInt(e.target.value) }
+                  }))}
+                  min="0"
+                />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="protein" className="text-sm font-medium">Protein (g)</label>
+                <Input
+                  id="protein"
+                  type="number"
+                  placeholder="Protein (g)"
+                  value={formData.nutritionalInfo.protein}
+                  onChange={(e) => setFormData(prev => ({
+                    ...prev,
+                    nutritionalInfo: { ...prev.nutritionalInfo, protein: parseInt(e.target.value) }
+                  }))}
+                  min="0"
+                />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="carbs" className="text-sm font-medium">Carbs (g)</label>
+                <Input
+                  id="carbs"
+                  type="number"
+                  placeholder="Carbs (g)"
+                  value={formData.nutritionalInfo.carbs}
+                  onChange={(e) => setFormData(prev => ({
+                    ...prev,
+                    nutritionalInfo: { ...prev.nutritionalInfo, carbs: parseInt(e.target.value) }
+                  }))}
+                  min="0"
+                />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="fats" className="text-sm font-medium">Fats (g)</label>
+                <Input
+                  id="fats"
+                  type="number"
+                  placeholder="Fats (g)"
+                  value={formData.nutritionalInfo.fats}
+                  onChange={(e) => setFormData(prev => ({
+                    ...prev,
+                    nutritionalInfo: { ...prev.nutritionalInfo, fats: parseInt(e.target.value) }
+                  }))}
+                  min="0"
+                />
+              </div>
             </div>
           </div>
 
