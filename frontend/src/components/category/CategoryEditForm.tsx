@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Textarea } from './ui/textarea';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { Textarea } from '../ui/textarea';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from './ui/dialog';
-import type { Category } from '../types/Menu';
+} from '../ui/dialog';
+import type { Category } from '../../types/Menu';
 
 interface CategoryEditDialogProps {
   category: Category | null;
@@ -18,10 +18,9 @@ interface CategoryEditDialogProps {
   onSave: (id: string, name: string, description: string) => Promise<void>;
 }
 
-export function CategoryEditDialog({ category, open, onOpenChange, onSave }: CategoryEditDialogProps) {
+export function CategoryEditForm({ category, open, onOpenChange, onSave }: CategoryEditDialogProps) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (category) {
@@ -34,12 +33,11 @@ export function CategoryEditDialog({ category, open, onOpenChange, onSave }: Cat
     e.preventDefault();
     if (!category) return;
     
-    setLoading(true);
     try {
       await onSave(category.id, name, description);
       onOpenChange(false);
-    } finally {
-      setLoading(false);
+    } catch (e: unknown) {
+      console.log(e)
     }
   };
 
@@ -68,11 +66,11 @@ export function CategoryEditDialog({ category, open, onOpenChange, onSave }: Cat
             />
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+            <Button type="button" styleType='red' onClick={() => onOpenChange(false)}>
               Cancel
             </Button>
-            <Button type="submit" disabled={loading}>
-              {loading ? 'Saving...' : 'Save Changes'}
+            <Button type="submit" styleType='green'>
+              Save Changes
             </Button>
           </DialogFooter>
         </form>

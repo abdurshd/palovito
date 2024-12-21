@@ -11,9 +11,9 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "./ui/alert-dialog";
-import { Button } from "./ui/button";
-import { useToast } from "./ui/use-toast";
+} from "../components/ui/alert-dialog";
+import { Button } from "../components/ui/button";
+import { useToast } from "../hooks/useToast";
 
 export function Dashboard() {
   const { toast } = useToast();

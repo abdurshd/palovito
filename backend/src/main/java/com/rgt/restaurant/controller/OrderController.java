@@ -1,6 +1,7 @@
 package com.rgt.restaurant.controller;
 
 import com.rgt.restaurant.model.Order;
+import com.rgt.restaurant.model.OrderStatus;
 import com.rgt.restaurant.service.OrderService;
 import lombok.RequiredArgsConstructor;
 
@@ -9,13 +10,11 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.rgt.restaurant.model.OrderRequest;
-import com.rgt.restaurant.model.OrderStatusRequest;
-import com.rgt.restaurant.model.OrderQuantityRequest;
 
 @RestController
 @RequestMapping("/api/order")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 public class OrderController {
 
     private final OrderService orderService;
@@ -33,9 +32,9 @@ public class OrderController {
     @PatchMapping("/{orderId}/status")
     public ResponseEntity<Order> updateOrderStatus(
         @PathVariable String orderId,
-        @RequestBody OrderStatusRequest statusRequest
+        @RequestBody OrderStatus status
     ) {
-        Order updatedOrder = orderService.updateOrderStatus(orderId, statusRequest.getStatus());
+        Order updatedOrder = orderService.updateOrderStatus(orderId, status);
         if (updatedOrder == null) {
             return ResponseEntity.notFound().build();
         }
@@ -45,9 +44,9 @@ public class OrderController {
     @PatchMapping("/{orderId}/quantity")
     public ResponseEntity<Order> updateOrderQuantity(
         @PathVariable String orderId,
-        @RequestBody OrderQuantityRequest quantityRequest
+        @RequestBody int quantity
     ) {
-        Order updatedOrder = orderService.updateOrderQuantity(orderId, quantityRequest.getQuantity());
+        Order updatedOrder = orderService.updateOrderQuantity(orderId, quantity);
         if (updatedOrder == null) {
             return ResponseEntity.notFound().build();
         }

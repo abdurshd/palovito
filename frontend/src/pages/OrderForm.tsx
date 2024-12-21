@@ -2,10 +2,9 @@ import { useState, useEffect } from 'react';
 import { orderService } from '../services/orderService';
 import { menuService } from '../services/menuService';
 import type { Menu } from '../types/Menu';
-import { Select } from './ui/select';
-import { useToast } from './ui/use-toast';
+import { Select } from '../components/ui/select';
+import { useToast } from '../hooks/useToast';
 
-// TODO: Add pages folder and move this file to it
 // TODO: Add a borders for the form area and make it beautiful
 // TODO: adding new front end project for the order form so that the customer can choose, add to the cart and then place the order
 

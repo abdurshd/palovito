@@ -20,10 +20,10 @@ public class Menu {
     private String imageUrl;
     private boolean isBestSeller;
     private boolean isAvailable;
-    private Integer preparationTime;
-    private Integer spicyLevel;
+    private int preparationTime;
+    private int spicyLevel;
     private List<String> allergens;
-    private Map<String, String> nutritionalInfo;
+    private Map<String, Integer> nutritionalInfo;
 
     public Menu(
         String id,
@@ -32,12 +32,12 @@ public class Menu {
         double price,
         Category category,
         String imageUrl,
-        boolean bestSeller,
-        boolean available,
+        boolean isBestSeller,
+        boolean isAvailable,
         int preparationTime,
         int spicyLevel,
         List<String> allergens,
-        Map<String, String> nutritionalInfo
+        Map<String, Integer> nutritionalInfo
     ) {
         this.id = id;
         this.name = name;
@@ -45,8 +45,8 @@ public class Menu {
         this.price = BigDecimal.valueOf(price);
         this.category = category;
         this.imageUrl = imageUrl;
-        this.isBestSeller = bestSeller;
-        this.isAvailable = available;
+        this.isBestSeller = isBestSeller;
+        this.isAvailable = isAvailable;
         this.preparationTime = preparationTime;
         this.spicyLevel = spicyLevel;
         this.allergens = allergens;

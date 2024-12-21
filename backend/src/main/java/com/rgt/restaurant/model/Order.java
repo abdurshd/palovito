@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Order {
     private String id;
-    private String foodName;
+    private Menu menu;
     private int quantity;
     private OrderStatus status;
     private String timestamp;

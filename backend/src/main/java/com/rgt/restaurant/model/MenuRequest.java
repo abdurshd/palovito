@@ -11,9 +11,10 @@ public class MenuRequest {
     private double price;
     private String categoryId;
     private String imageUrl;
-    private boolean bestSeller;
+    private boolean isBestSeller;
+    private boolean isAvailable;
     private int preparationTime;
     private int spicyLevel;
     private List<String> allergens;
-    private Map<String, String> nutritionalInfo;
+    private Map<String, Integer> nutritionalInfo;
 } 

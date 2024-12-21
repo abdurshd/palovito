@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.util.concurrent.CompletableFuture;
 import com.rgt.restaurant.model.Order;
 import com.rgt.restaurant.model.OrderStatus;
+import com.rgt.restaurant.model.Menu;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import java.time.Duration;
@@ -26,6 +27,7 @@ public class OrderService {
     private final Map<String, CompletableFuture<?>> processingOrders = new ConcurrentHashMap<>();
     private final Map<String, Boolean> manuallyUpdatedOrders = new ConcurrentHashMap<>();
     private final SimpMessagingTemplate messagingTemplate;
+    private final MenuService menuService;
     
     @Value("${order.processing.initial-delay:5000}")
     private long initialDelay;
@@ -45,20 +47,24 @@ public class OrderService {
     }
     
     public Order createOrder(OrderRequest request) {
-        return createOrder(request.getFoodName(), request.getQuantity());
+        Menu menu = menuService.getMenu(request.getMenuId());
+        if (menu == null) {
+            throw new IllegalArgumentException("Menu item not found");
+        }
+        return createOrder(menu, request.getQuantity());
     }
     
-    private Order createOrder(String foodName, int quantity) {
-        log.info("Creating new order - Food: {}, Quantity: {}", foodName, quantity);
+    private Order createOrder(Menu menu, int quantity) {
+        log.info("Creating new order - Menu: {}, Quantity: {}", menu.getName(), quantity);
         
-        if (foodName.isBlank() || quantity <= 0) {
-            log.error("Invalid order data - Food: {}, Quantity: {}", foodName, quantity);
-            throw new IllegalArgumentException("Invalid order data");
+        if (quantity <= 0) {
+            log.error("Invalid order quantity: {}", quantity);
+            throw new IllegalArgumentException("Quantity must be greater than 0");
         }
         
         Order order = new Order(
             UUID.randomUUID().toString(),
-            foodName,
+            menu,
             quantity,
             OrderStatus.RECEIVED,
             Instant.now().toString()
@@ -66,7 +72,6 @@ public class OrderService {
         
         orders.put(order.getId(), order);
         manuallyUpdatedOrders.put(order.getId(), false);
-        log.info("Order created successfully - ID: {}", order.getId());
         messagingTemplate.convertAndSend("/topic/orders", order);
         
         if (!manuallyUpdatedOrders.get(order.getId())) {

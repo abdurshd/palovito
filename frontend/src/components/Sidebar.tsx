@@ -56,8 +56,8 @@ export function Sidebar() {
               <LayoutDashboard size={20} />
               {isOpen && <span>Dashboard</span>}
             </NavLink>
-            <NavLink
-              to="/menu/categories"
+            <NavLink 
+              to="/categories" 
               className={({ isActive }) => isActive ? activeLinkClass : linkClass}
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -65,20 +65,12 @@ export function Sidebar() {
               {isOpen && <span>Categories</span>}
             </NavLink>
             <NavLink
-              to="/menu/items"
+              to="/menuItems"
               className={({ isActive }) => isActive ? activeLinkClass : linkClass}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               <UtensilsCrossed size={20} />
               {isOpen && <span>Menu Items</span>}
-            </NavLink>
-            <NavLink
-              to="/menu/list"
-              className={({ isActive }) => isActive ? activeLinkClass : linkClass}
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <UtensilsCrossed size={20} />
-              {isOpen && <span>View Menu</span>}
             </NavLink>
           </nav>
         </div>
