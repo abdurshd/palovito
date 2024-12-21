@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { useCart } from '../hooks/useCart';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
-import { Input } from '../components/ui/input';
-import { Textarea } from '../components/ui/textarea';
 import { orderService } from '../services/orderService';
 import { useToast } from "../hooks/use-toast"
 
@@ -12,42 +10,28 @@ export function Checkout() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
-    notes: ''
-  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (items.length === 0) {
-      toast({
-        title: 'Error',
-        description: 'Your cart is empty',
-        variant: 'destructive'
-      });
-      return;
-    }
+    if (items.length === 0) return;
 
     setLoading(true);
     try {
-      const order = await orderService.createOrder({
-        customerInfo: formData,
+      const orderRequest = {
         items: items.map(item => ({
           menuId: item.menuItem.id,
           quantity: item.quantity
         }))
-      });
+      };
 
+      const order = await orderService.createOrder(orderRequest);
       clearCart();
       toast({
         title: 'Success',
         description: 'Your order has been placed successfully!',
         variant: 'default'
       });
-      navigate(`/order-status/${order.id}`);
+      navigate(`/orders/${order.id}`);
     } catch (error) {
       toast({
         title: 'Error',
@@ -80,52 +64,13 @@ export function Checkout() {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium mb-1">Name</label>
-          <Input
-            required
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">Email</label>
-          <Input
-            type="email"
-            required
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">Phone</label>
-          <Input
-            required
-            value={formData.phone}
-            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">Delivery Address</label>
-          <Textarea
-            required
-            value={formData.address}
-            onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">Order Notes</label>
-          <Textarea
-            value={formData.notes}
-            onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-            placeholder="Any special instructions?"
-          />
-        </div>
-        <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? 'Placing Order...' : 'Place Order'}
-        </Button>
-      </form>
+      <Button 
+        onClick={handleSubmit} 
+        className="w-full" 
+        disabled={loading}
+      >
+        {loading ? 'Placing Order...' : 'Place Order'}
+      </Button>
     </div>
   );
 } 

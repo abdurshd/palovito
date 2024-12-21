@@ -1,32 +1,37 @@
 import { useState, useEffect } from 'react';
 import { orderService } from '../services/orderService';
+import { WebSocketService } from '../services/websocketService';
 import { useToast } from "../hooks/use-toast"
 import { Button } from "../components/ui/button"
 import { useNavigate } from 'react-router-dom';
-
-interface OrderSummary {
-  id: string;
-  status: string;
-  total: number;
-  createdAt: string;
-  items: Array<{
-    menuItem: {
-      name: string;
-    };
-    quantity: number;
-  }>;
-}
+import type { Order } from '../types/Order';
 
 export function OrderHistory() {
-  const [orders, setOrders] = useState<OrderSummary[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
   const navigate = useNavigate();
 
   useEffect(() => {
+    const wsService = new WebSocketService();
+    
+    // Connect to WebSocket for real-time updates
+    wsService.connect('all', (updatedOrder) => {
+      setOrders(prevOrders => {
+        const orderExists = prevOrders.some(order => order.id === updatedOrder.id);
+        if (orderExists) {
+          return prevOrders.map(order => 
+            order.id === updatedOrder.id ? updatedOrder : order
+          );
+        }
+        return [...prevOrders, updatedOrder];
+      });
+    });
+
+    // Fetch initial orders
     const fetchOrders = async () => {
       try {
-        const data = await orderService.getCustomerOrders();
+        const data = await orderService.getAllOrders();
         setOrders(data);
       } catch (error) {
         toast({
@@ -40,20 +45,26 @@ export function OrderHistory() {
     };
 
     fetchOrders();
+
+    return () => {
+      wsService.disconnect();
+    };
   }, [toast]);
 
   if (loading) {
     return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
   }
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: Order['status']) => {
     switch (status) {
       case 'COMPLETED':
         return 'bg-green-100 text-green-800';
       case 'PROCESSING':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-yellow-100 text-yellow-800';
       case 'CANCELLED':
         return 'bg-red-100 text-red-800';
+      case 'RECEIVED':
+        return 'bg-blue-100 text-blue-800';
       default:
         return 'bg-gray-100 text-gray-800';
     }
@@ -66,7 +77,7 @@ export function OrderHistory() {
       <div className="space-y-4">
         {orders.length === 0 ? (
           <div className="text-center py-8">
-            <p className="text-gray-500 mb-4">You haven't placed any orders yet</p>
+            <p className="text-gray-500 mb-4">No orders found</p>
             <Button onClick={() => navigate('/menu')}>Browse Menu</Button>
           </div>
         ) : (
@@ -79,13 +90,11 @@ export function OrderHistory() {
                 <div>
                   <p className="text-sm text-gray-500">Order ID: {order.id}</p>
                   <p className="text-sm text-gray-500">
-                    {new Date(order.createdAt).toLocaleDateString()}
+                    {new Date(order.timestamp).toLocaleString()}
                   </p>
                 </div>
                 <span
-                  className={`px-3 py-1 rounded-full text-sm ${getStatusColor(
-                    order.status
-                  )}`}
+                  className={`px-3 py-1 rounded-full text-sm ${getStatusColor(order.status)}`}
                 >
                   {order.status}
                 </span>
@@ -93,8 +102,11 @@ export function OrderHistory() {
 
               <div className="space-y-2 mb-4">
                 {order.items.map((item, index) => (
-                  <div key={index} className="text-sm">
-                    {item.menuItem.name} x {item.quantity}
+                  <div key={index} className="text-sm flex justify-between">
+                    <span>{item.menuItem.name} x {item.quantity}</span>
+                    <span className="text-gray-600">
+                      ${(item.menuItem.price * item.quantity).toFixed(2)}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -105,7 +117,7 @@ export function OrderHistory() {
                 </span>
                 <Button
                   variant="outline"
-                  onClick={() => navigate(`/order-status/${order.id}`)}
+                  onClick={() => navigate(`/orders/${order.id}`)}
                 >
                   View Details
                 </Button>

@@ -11,7 +11,7 @@ export interface Menu {
   price: number;
   imageUrl?: string;
   category: Category;
-  isAvailable: boolean;
+  available: boolean;
   preparationTime?: number;
   spicyLevel?: number;
   allergens?: string[];

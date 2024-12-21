@@ -29,10 +29,6 @@ export function Home() {
           <p className="text-gray-600">Browse our menu and order with just a few clicks</p>
         </div>
         <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold mb-2">Fast Delivery</h3>
-          <p className="text-gray-600">Quick and reliable delivery to your doorstep</p>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-md">
           <h3 className="text-lg font-semibold mb-2">Track Orders</h3>
           <p className="text-gray-600">Real-time updates on your order status</p>
         </div>

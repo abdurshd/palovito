@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Value;
 import com.rgt.restaurant.model.OrderRequest;
+import com.rgt.restaurant.model.OrderItem;
 
 @Slf4j
 @Service
@@ -47,27 +48,30 @@ public class OrderService {
     }
     
     public Order createOrder(OrderRequest request) {
-        Menu menu = menuService.getMenu(request.getMenuId());
-        if (menu == null) {
-            throw new IllegalArgumentException("Menu item not found");
+        if (request.getItems() == null || request.getItems().isEmpty()) {
+            throw new IllegalArgumentException("Order must contain at least one item");
         }
-        return createOrder(menu, request.getQuantity());
-    }
-    
-    private Order createOrder(Menu menu, int quantity) {
-        log.info("Creating new order - Menu: {}, Quantity: {}", menu.getName(), quantity);
-        
-        if (quantity <= 0) {
-            log.error("Invalid order quantity: {}", quantity);
-            throw new IllegalArgumentException("Quantity must be greater than 0");
+
+        List<OrderItem> orderItems = new ArrayList<>();
+        double total = 0.0;
+
+        for (OrderRequest.OrderItem item : request.getItems()) {
+            Menu menu = menuService.getMenu(item.getMenuId());
+            if (menu == null) {
+                throw new IllegalArgumentException("Menu item not found: " + item.getMenuId());
+            }
+            
+            OrderItem orderItem = new OrderItem(menu, item.getQuantity());
+            orderItems.add(orderItem);
+            total += menu.getPrice().doubleValue() * item.getQuantity();
         }
-        
+
         Order order = new Order(
             UUID.randomUUID().toString(),
-            menu,
-            quantity,
+            orderItems,
             OrderStatus.RECEIVED,
-            Instant.now().toString()
+            Instant.now().toString(),
+            total
         );
         
         orders.put(order.getId(), order);
@@ -119,16 +123,29 @@ public class OrderService {
         return null;
     }
     
-    public Order updateOrderQuantity(String orderId, int newQuantity) {
+    public Order updateOrderQuantity(String orderId, String menuId, int newQuantity) {
         Order order = orders.get(orderId);
         if (order != null && order.getStatus() != OrderStatus.COMPLETED) {
             if (newQuantity <= 0) {
                 throw new IllegalArgumentException("Quantity must be greater than 0");
             }
-            order.setQuantity(newQuantity);
+            
+            OrderItem itemToUpdate = order.getItems().stream()
+                .filter(item -> item.getMenu().getId().equals(menuId))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Menu item not found in order"));
+            
+            itemToUpdate.setQuantity(newQuantity);
+            
+            // Recalculate total
+            double total = order.getItems().stream()
+                .mapToDouble(item -> item.getMenu().getPrice().doubleValue() * item.getQuantity())
+                .sum();
+            order.setTotal(total);
+            
             orders.put(orderId, order);
             messagingTemplate.convertAndSend("/topic/orders/update", order);
-            log.info("Order quantity updated - ID: {}, New Quantity: {}", orderId, newQuantity);
+            log.info("Order quantity updated - ID: {}, Menu: {}, New Quantity: {}", orderId, menuId, newQuantity);
             return order;
         }
         return null;

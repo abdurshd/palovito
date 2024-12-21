@@ -34,7 +34,7 @@ export function MenuCard({ menu }: MenuCardProps) {
         </div>
         <p className="text-gray-600 text-sm mb-4">{menu.description}</p>
         
-        {menu.isAvailable ? (
+        {menu.available ? (
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <Button

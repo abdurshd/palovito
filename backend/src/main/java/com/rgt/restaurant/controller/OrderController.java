@@ -43,9 +43,10 @@ public class OrderController {
     @PatchMapping("/{orderId}/quantity")
     public ResponseEntity<Order> updateOrderQuantity(
         @PathVariable String orderId,
+        @RequestParam String menuId,
         @RequestBody int quantity
     ) {
-        Order updatedOrder = orderService.updateOrderQuantity(orderId, quantity);
+        Order updatedOrder = orderService.updateOrderQuantity(orderId, menuId, quantity);
         if (updatedOrder == null) {
             return ResponseEntity.notFound().build();
         }
@@ -59,5 +60,14 @@ public class OrderController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(cancelledOrder);
+    }
+
+    @GetMapping("/{orderId}")
+    public ResponseEntity<Order> getOrder(@PathVariable String orderId) {
+        Order order = orderService.getOrder(orderId);
+        if (order == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(order);
     }
 } 
