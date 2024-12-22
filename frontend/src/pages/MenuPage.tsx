@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { menuService } from '../services/menuService';
 import { categoryService } from '../services/categoryService';
 import type { Menu, Category } from '../types/Menu';
-import { useToast } from '../hooks/useToast';
+import { useToast } from '../hooks/use-toast';
 import { Button } from '../components/ui/button';
-import { Plus, Pencil, Trash2 } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { MenuAddForm } from '../components/menu/MenuAddForm';
 import { MenuEditForm } from '../components/menu/MenuEditForm';
 import {
@@ -18,6 +18,7 @@ import {
   AlertDialogTitle,
 } from '../components/ui/alert-dialog';
 import { Select } from '../components/ui/select';
+import { MenuCard } from '../components/menu/MenuCard';
 
 export function MenuPage() {
   const { toast } = useToast();
@@ -130,7 +131,8 @@ export function MenuPage() {
           </Button>
         </div>
 
-        <div className="mb-4">
+        <div className="mb-4 flex gap-2">
+          <div className="flex justify-between items-center">Filter by Category</div>
           <Select
             value={selectedCategory}
             onValueChange={setSelectedCategory}
@@ -153,45 +155,15 @@ export function MenuPage() {
               </p>
             </div>
           ) : (
-            <div className="grid gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredMenus.map(menu => (
-                <div key={menu.id} className="bg-white rounded-lg shadow-md p-6">
-                  <div className="flex justify-between items-start">
-                    <div className="flex gap-4">
-                      {menu.imageUrl && (
-                        <img
-                          src={menu.imageUrl}
-                          alt={menu.name}
-                          className="w-24 h-24 object-cover rounded"
-                        />
-                      )}
-                      <div>
-                        <h3 className="text-lg font-semibold">{menu.name}</h3>
-                        <p className="text-sm text-gray-600">{menu.category.name}</p>
-                        <p className="text-gray-600 mt-1">{menu.description}</p>
-                        <p className="text-lg font-bold mt-2">${menu.price}</p>
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-blue-600 hover:text-blue-800 hover:bg-blue-100"
-                        onClick={() => setMenuToEdit(menu)}
-                      >
-                        <Pencil size={16} />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-red-600 hover:text-red-800 hover:bg-red-100"
-                        onClick={() => setMenuToDelete(menu.id)}
-                      >
-                        <Trash2 size={16} />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
+                <MenuCard 
+                  key={menu.id} 
+                  menu={menu}
+                  onEdit={setMenuToEdit}
+                  onDelete={setMenuToDelete}
+                  isAdmin={true}
+                />
               ))}
             </div>
           )}

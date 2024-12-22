@@ -21,8 +21,8 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
     price: 0,
     categoryId: '',
     imageUrl: '',
-    isBestSeller: false,
-    isAvailable: true,
+    bestSeller: false,
+    available: true,
     preparationTime: 0,
     spicyLevel: 0,
     allergens: '',
@@ -52,8 +52,8 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
       price: 0,
       categoryId: '',
       imageUrl: '',
-      isBestSeller: false,
-      isAvailable: true,
+      bestSeller: false,
+      available: true,
       preparationTime: 0,
       spicyLevel: 0,
       allergens: '',
@@ -178,15 +178,15 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
             <div className="flex items-center justify-between">
               <label className="text-sm">Best Seller</label>
               <Switch
-                checked={formData.isBestSeller}
-                onCheckedChange={(checked) => setFormData(prev => ({ ...prev, isBestSeller: checked }))}
+                checked={formData.bestSeller}
+                onCheckedChange={(checked) => setFormData(prev => ({ ...prev, bestSeller: checked }))}
               />
             </div>
             <div className="flex items-center justify-between">
               <label className="text-sm">Available</label>
               <Switch
-                checked={formData.isAvailable}
-                onCheckedChange={(checked) => setFormData(prev => ({ ...prev, isAvailable: checked }))}
+                checked={formData.available}
+                onCheckedChange={(checked) => setFormData(prev => ({ ...prev, available: checked }))}
               />
             </div>
           </div>

@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.rgt.restaurant.model.OrderRequest;
+import com.rgt.restaurant.model.StatusUpdateRequest;
 
 @RestController
 @RequestMapping("/api/order")
@@ -31,9 +32,9 @@ public class OrderController {
     @PatchMapping("/{orderId}/status")
     public ResponseEntity<Order> updateOrderStatus(
         @PathVariable String orderId,
-        @RequestBody OrderStatus status
+        @RequestBody StatusUpdateRequest status
     ) {
-        Order updatedOrder = orderService.updateOrderStatus(orderId, status);
+        Order updatedOrder = orderService.updateOrderStatus(orderId, status.getStatus());
         if (updatedOrder == null) {
             return ResponseEntity.notFound().build();
         }

@@ -32,6 +32,10 @@ export const orderService = {
       });
       return response.data;
     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data?.message || 'Failed to update order status';
+        throw new Error(errorMessage);
+      }
       throw new Error('Failed to update order status');
     }
   },
@@ -53,6 +57,17 @@ export const orderService = {
       return response.data;
     } catch (error) {
       throw new Error('Failed to cancel order');
+    }
+  },
+
+  updateItemQuantity: async (orderId: string, itemId: string, quantity: number): Promise<Order> => {
+    try {
+      const response = await axios.patch(`${API_URL}/order/${orderId}/items/${itemId}/quantity`, {
+        quantity
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to update item quantity');
     }
   }
 }; 

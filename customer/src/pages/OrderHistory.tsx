@@ -103,9 +103,9 @@ export function OrderHistory() {
               <div className="space-y-2 mb-4">
                 {order.items.map((item, index) => (
                   <div key={index} className="text-sm flex justify-between">
-                    <span>{item.menuItem.name} x {item.quantity}</span>
+                    <span>{item.menu.name} x {item.quantity}</span>
                     <span className="text-gray-600">
-                      ${(item.menuItem.price * item.quantity).toFixed(2)}
+                      ${(item.menu.price * item.quantity).toFixed(2)}
                     </span>
                   </div>
                 ))}

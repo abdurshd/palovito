@@ -9,12 +9,23 @@ export interface Menu {
   name: string;
   description: string;
   price: number;
-  imageUrl?: string;
-  category: Category;
+  category: {
+    id: string;
+    name: string;
+    description: string;
+  };
+  imageUrl: string;
+  preparationTime: number;
+  spicyLevel: number;
+  allergens: string[];
+  nutritionalInfo: {
+    calories: number;
+    protein: number;
+    carbs: number;
+    fats: number;
+  };
+  bestSeller: boolean;
   available: boolean;
-  preparationTime?: number;
-  spicyLevel?: number;
-  allergens?: string[];
 }
 
 export interface MenuRequest {

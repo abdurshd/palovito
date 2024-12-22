@@ -3,7 +3,7 @@ import { orderService } from '../services/orderService';
 import { menuService } from '../services/menuService';
 import type { Menu } from '../types/Menu';
 import { Select } from '../components/ui/select';
-import { useToast } from '../hooks/useToast';
+import { useToast } from '../hooks/use-toast';
 
 export function OrderForm() {
   const { toast } = useToast();
@@ -16,7 +16,7 @@ export function OrderForm() {
     const fetchMenuItems = async () => {
       try {
         const items = await menuService.getAllMenus();
-        setMenuItems(items.filter(item => item.isAvailable));
+        setMenuItems(items.filter(item => item.available));
       } catch (error) {
         toast({
           title: 'Error',

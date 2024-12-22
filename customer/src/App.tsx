@@ -1,5 +1,4 @@
-import { BrowserRouter } from 'react-router-dom';
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { MenuPage } from './pages/MenuPage';
 import { Cart } from './components/cart/Cart';
 import { Checkout } from './pages/Checkout';

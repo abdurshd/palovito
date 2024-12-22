@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { categoryService } from '../services/categoryService';
 import type { Category } from '../types/Menu';
-import { useToast } from '../hooks/useToast';
+import { useToast } from '../hooks/use-toast';
 import { Button } from '../components/ui/button';
 import { Plus, Pencil, Trash2 } from 'lucide-react';
 import { CategoryAddForm } from '../components/category/CategoryAddForm';

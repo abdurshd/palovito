@@ -11,9 +11,9 @@ interface Menu {
   price: number;
   category: Category;
   imageUrl: string;
-  isBestSeller: boolean;
-  isAvailable: boolean;
-  preparationTime?: number; // in minutes
+  bestSeller: boolean;
+  available: boolean;
+  preparationTime?: number; 
   spicyLevel: number;
   allergens?: string[];
   nutritionalInfo?: {

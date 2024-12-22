@@ -1,6 +1,5 @@
 import { Component, ErrorInfo, ReactNode } from 'react';
 
-// TODO: add common error handling for the app and toast messages for succussful and failed operations, and add common loading state for the app
 
 interface Props {
     children?: ReactNode;
