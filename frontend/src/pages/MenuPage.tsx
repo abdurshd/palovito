@@ -175,7 +175,6 @@ export function MenuPage() {
                   menu={menu}
                   onEdit={setMenuToEdit}
                   onDelete={setMenuToDelete}
-                  isAdmin={true}
                 />
               ))}
             </div>
