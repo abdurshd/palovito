@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Menu {
     private String id;
     private String name;
@@ -18,8 +20,8 @@ public class Menu {
     private BigDecimal price;
     private Category category;
     private String imageUrl;
-    private boolean isBestSeller;
-    private boolean isAvailable;
+    private boolean bestSeller;
+    private boolean available;
     private int preparationTime;
     private int spicyLevel;
     private List<String> allergens;
@@ -45,8 +47,8 @@ public class Menu {
         this.price = BigDecimal.valueOf(price);
         this.category = category;
         this.imageUrl = imageUrl;
-        this.isBestSeller = isBestSeller;
-        this.isAvailable = isAvailable;
+        this.bestSeller = isBestSeller;
+        this.available = isAvailable;
         this.preparationTime = preparationTime;
         this.spicyLevel = spicyLevel;
         this.allergens = allergens;

@@ -20,7 +20,7 @@ public class MenuController {
     public ResponseEntity<Menu> createMenu(@RequestBody MenuRequest request) {
         try {
             Menu menu = menuService.createMenu(request);
-            return ResponseEntity.ok(menu);
+            return ResponseEntity.status(HttpStatus.CREATED).body(menu);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         } catch (Exception e) {

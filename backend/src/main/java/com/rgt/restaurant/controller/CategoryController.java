@@ -18,7 +18,8 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<Category> createCategory(@RequestBody CategoryRequest request) {
-        return ResponseEntity.ok(categoryService.createCategory(request.getName(), request.getDescription()));
+        Category category = categoryService.createCategory(request.getName(), request.getDescription());
+        return ResponseEntity.status(HttpStatus.CREATED).body(category);
     }
 
     @GetMapping
@@ -30,7 +31,7 @@ public class CategoryController {
     public ResponseEntity<Void> deleteCategory(@PathVariable String id) {
         try {
             categoryService.deleteCategory(id);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.noContent().build();
         } catch (IllegalStateException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } catch (IllegalArgumentException e) {
@@ -43,8 +44,9 @@ public class CategoryController {
             @PathVariable String id,
             @RequestBody CategoryRequest request) {
         try {
-            return ResponseEntity.ok(categoryService.updateCategory(
-                id, request.getName(), request.getDescription()));
+            Category category = categoryService.updateCategory(
+                id, request.getName(), request.getDescription());
+            return ResponseEntity.ok(category);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }

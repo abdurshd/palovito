@@ -111,4 +111,8 @@ public class MenuService {
             throw new RuntimeException("Failed to update menu item", e);
         }
     }
+
+    public void deleteAllMenus() {
+        menus.clear();
+    }
 } 

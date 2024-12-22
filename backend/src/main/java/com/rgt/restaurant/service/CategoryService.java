@@ -57,4 +57,8 @@ public class CategoryService {
         log.info("Category updated - ID: {}, Name: {}", id, name);
         return category;
     }
+
+    public void deleteAllCategories() {
+        categories.clear();
+    }
 } 

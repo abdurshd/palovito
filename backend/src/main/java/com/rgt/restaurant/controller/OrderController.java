@@ -1,12 +1,12 @@
 package com.rgt.restaurant.controller;
 
 import com.rgt.restaurant.model.Order;
-import com.rgt.restaurant.model.OrderStatus;
 import com.rgt.restaurant.service.OrderService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.rgt.restaurant.model.OrderRequest;
@@ -21,7 +21,7 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<Order> createOrder(@RequestBody OrderRequest orderRequest) {
-        return ResponseEntity.ok(orderService.createOrder(orderRequest));
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderService.createOrder(orderRequest));
     }
 
     @GetMapping
