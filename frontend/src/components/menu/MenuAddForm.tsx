@@ -4,7 +4,7 @@ import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { Select } from '../ui/select';
 import { Switch } from '../ui/switch';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { Category, Menu } from '../../types/Menu';
 
 interface MenuFormProps {
@@ -15,7 +15,7 @@ interface MenuFormProps {
 }
 
 export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuFormProps) {
-  const [formData, setFormData] = useState({
+  const initialFormState = {
     name: '',
     description: '',
     price: 0,
@@ -32,38 +32,40 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
       carbs: 0,
       fats: 0
     }
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormState);
+  const [error, setError] = useState<string | null>(null);
+
+  // Reset form when dialog is closed
+  useEffect(() => {
+    if (!open) {
+      setFormData(initialFormState);
+      setError(null);
+    }
+  }, [open]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const category = categories.find(c => c.id === formData.categoryId);
-    if (!category) return;
+    setError(null);
 
-    await onSave({
-      ...formData,
-      category,
-      allergens: formData.allergens.split(',').map(a => a.trim()).filter(Boolean)
-    });
+    try {
+      const category = categories.find(c => c.id === formData.categoryId);
+      if (!category) throw new Error('Category not found');
 
-    // Reset form
-    setFormData({
-      name: '',
-      description: '',
-      price: 0,
-      categoryId: '',
-      imageUrl: '',
-      bestSeller: false,
-      available: true,
-      preparationTime: 0,
-      spicyLevel: 0,
-      allergens: '',
-      nutritionalInfo: {
-        calories: 0,
-        protein: 0,
-        carbs: 0,
-        fats: 0
-      }
-    });
+      await onSave({
+        ...formData,
+        category,
+        allergens: formData.allergens.split(',').map(a => a.trim()).filter(Boolean)
+      });
+
+      // Only reset form on successful save
+      setFormData(initialFormState);
+      onOpenChange(false);
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Failed to save menu item');
+      // Form data persists on error
+    }
   };
 
   return (
@@ -73,6 +75,11 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
           <DialogTitle>Add New Menu Item</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-6">
+          {error && (
+            <div className="text-red-500 text-sm p-2 bg-red-50 rounded">
+              {error}
+            </div>
+          )}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label htmlFor="name" className="text-sm font-medium">Name</label>
@@ -82,6 +89,8 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
                 value={formData.name}
                 onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                 required
+                maxLength={100}
+                minLength={2}
               />
             </div>
             <div className="space-y-2">
@@ -110,6 +119,8 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
               value={formData.description}
               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
               required
+              maxLength={500}
+              minLength={10}
             />
           </div>
 
@@ -123,7 +134,8 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
                 value={formData.price}
                 onChange={(e) => setFormData(prev => ({ ...prev, price: parseFloat(e.target.value) }))}
                 required
-                min="0"
+                min="0.01"
+                max="999999.99"
                 step="0.01"
               />
             </div>
@@ -134,6 +146,8 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
                 placeholder="Image URL"
                 value={formData.imageUrl}
                 onChange={(e) => setFormData(prev => ({ ...prev, imageUrl: e.target.value }))}
+                maxLength={255}
+                pattern="https?:\/\/.+"
               />
             </div>
           </div>
@@ -147,7 +161,9 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
                 placeholder="Preparation Time"
                 value={formData.preparationTime}
                 onChange={(e) => setFormData(prev => ({ ...prev, preparationTime: parseInt(e.target.value) }))}
-                min="0"
+                required
+                min="1"
+                max="180"
               />
             </div>
             <div className="space-y-2">
@@ -158,6 +174,7 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
                 placeholder="Spicy Level"
                 value={formData.spicyLevel}
                 onChange={(e) => setFormData(prev => ({ ...prev, spicyLevel: parseInt(e.target.value) }))}
+                required
                 min="0"
                 max="5"
               />
@@ -171,6 +188,7 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
               placeholder="Allergens (comma-separated)"
               value={formData.allergens}
               onChange={(e) => setFormData(prev => ({ ...prev, allergens: e.target.value }))}
+              maxLength={255}
             />
           </div>
 
@@ -205,7 +223,9 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
                     ...prev,
                     nutritionalInfo: { ...prev.nutritionalInfo, calories: parseInt(e.target.value) }
                   }))}
+                  required
                   min="0"
+                  max="9999"
                 />
               </div>
               <div className="space-y-2">
@@ -217,9 +237,12 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
                   value={formData.nutritionalInfo.protein}
                   onChange={(e) => setFormData(prev => ({
                     ...prev,
-                    nutritionalInfo: { ...prev.nutritionalInfo, protein: parseInt(e.target.value) }
+                    nutritionalInfo: { ...prev.nutritionalInfo, protein: parseFloat(e.target.value) }
                   }))}
+                  required
                   min="0"
+                  max="999"
+                  step="0.1"
                 />
               </div>
               <div className="space-y-2">
@@ -231,9 +254,12 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
                   value={formData.nutritionalInfo.carbs}
                   onChange={(e) => setFormData(prev => ({
                     ...prev,
-                    nutritionalInfo: { ...prev.nutritionalInfo, carbs: parseInt(e.target.value) }
+                    nutritionalInfo: { ...prev.nutritionalInfo, carbs: parseFloat(e.target.value) }
                   }))}
+                  required
                   min="0"
+                  max="999"
+                  step="0.1"
                 />
               </div>
               <div className="space-y-2">
@@ -245,9 +271,12 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
                   value={formData.nutritionalInfo.fats}
                   onChange={(e) => setFormData(prev => ({
                     ...prev,
-                    nutritionalInfo: { ...prev.nutritionalInfo, fats: parseInt(e.target.value) }
+                    nutritionalInfo: { ...prev.nutritionalInfo, fats: parseFloat(e.target.value) }
                   }))}
+                  required
                   min="0"
+                  max="999"
+                  step="0.1"
                 />
               </div>
             </div>

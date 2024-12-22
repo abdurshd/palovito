@@ -37,4 +37,16 @@ public class MenuController {
     public ResponseEntity<List<Menu>> getMenusByCategory(@PathVariable String categoryId) {
         return ResponseEntity.ok(menuService.getMenusByCategory(categoryId));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Menu> updateMenu(@PathVariable String id, @RequestBody MenuRequest request) {
+        try {
+            Menu menu = menuService.updateMenu(id, request);
+            return ResponseEntity.ok(menu);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 } 

@@ -73,4 +73,42 @@ public class MenuService {
         }
         return menu;
     }
+
+    public Menu updateMenu(String id, MenuRequest request) {
+        Menu existingMenu = menus.get(id);
+        if (existingMenu == null) {
+            log.error("Menu not found with ID: {}", id);
+            throw new IllegalArgumentException("Menu not found");
+        }
+
+        Category category = categoryService.getCategory(request.getCategoryId());
+        if (category == null) {
+            log.error("Category not found with ID: {}", request.getCategoryId());
+            throw new IllegalArgumentException("Category not found");
+        }
+
+        try {
+            Menu updatedMenu = new Menu(
+                id,
+                request.getName(),
+                request.getDescription(),
+                request.getPrice(),
+                category,
+                request.getImageUrl(),
+                request.isBestSeller(),
+                request.isAvailable(),
+                request.getPreparationTime(),
+                request.getSpicyLevel(),
+                request.getAllergens(),
+                request.getNutritionalInfo()
+            );
+
+            menus.put(id, updatedMenu);
+            log.info("Menu item updated - ID: {}, Name: {}", id, updatedMenu.getName());
+            return updatedMenu;
+        } catch (Exception e) {
+            log.error("Error updating menu item: {}", e.getMessage());
+            throw new RuntimeException("Failed to update menu item", e);
+        }
+    }
 } 

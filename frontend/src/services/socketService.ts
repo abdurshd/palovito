@@ -45,4 +45,4 @@ export class SocketService {
     this.client?.deactivate();
     this.client = null;
   }
-} 
+}
