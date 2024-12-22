@@ -1,4 +1,3 @@
-
 import { Button } from '../ui/button';
 import { Clock, Flame, Pencil, Trash2 } from 'lucide-react';
 import type { Menu } from '../../types/Menu';
@@ -50,6 +49,7 @@ export function MenuCard({ menu, onEdit, onDelete, isAdmin = false }: MenuCardPr
                 size="sm"
                 className="text-red-600 hover:text-red-800 hover:bg-red-100"
                 onClick={() => onDelete?.(menu.id)}
+                aria-label="Delete menu item"
               >
                 <Trash2 size={16} />
               </Button>

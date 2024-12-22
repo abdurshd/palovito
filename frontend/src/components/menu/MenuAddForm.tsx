@@ -2,7 +2,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
-import { Select } from '../ui/select';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../ui/select';
 import { Switch } from '../ui/switch';
 import { useState, useEffect } from 'react';
 import type { Category, Menu } from '../../types/Menu';
@@ -95,18 +95,18 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
             </div>
             <div className="space-y-2">
               <label htmlFor="category" className="text-sm font-medium">Category</label>
-              <Select
-                id="category"
-                value={formData.categoryId}
-                onValueChange={(value) => setFormData(prev => ({ ...prev, categoryId: value }))}
-                required
-              >
-                <option value="">Select Category</option>
-                {categories.map(category => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
+              <Select value={formData.categoryId} onValueChange={(value) => setFormData(prev => ({ ...prev, categoryId: value }))}>
+                <SelectTrigger id="category">
+                  <SelectValue placeholder="Select Category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="_empty">Select Category</SelectItem>
+                  {categories.map(category => (
+                    <SelectItem key={category.id} value={category.id}>
+                      {category.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
               </Select>
             </div>
           </div>
@@ -283,10 +283,10 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
           </div>
 
           <DialogFooter>
-            <Button type="button" onClick={() => onOpenChange(false)} styleType='red'>
+            <Button type="button" onClick={() => onOpenChange(false)}>
               Cancel
             </Button>
-            <Button type="submit" styleType='green'>
+            <Button type="submit">
               Add Menu Item
             </Button>
           </DialogFooter>

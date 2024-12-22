@@ -135,6 +135,14 @@ export function Dashboard() {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-full">
+        <p className="text-gray-500">Loading orders...</p>
+      </div>
+    );
+  }
+
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -153,13 +161,13 @@ export function Dashboard() {
           <table className="w-full divide-y divide-gray-200">
             <thead className="bg-blue-200">
               <tr>
-                <th className={thClass('150px')}>Order ID</th>
-                <th className={thClass('100px')}>Items</th>
-                <th className={thClass('100px')}>Total</th>
-                <th className={thClass('120px')}>Status</th>
-                <th className={thClass('150px')}>Actions</th>
-                <th className={thClass('120px')}>Details</th>
-                <th className={thClass('180px')}>Time</th>
+                <th scope='col' className={thClass('150px')}>Order ID</th>
+                <th scope='col' className={thClass('100px')}>Items</th>
+                <th scope='col' className={thClass('100px')}>Total</th>
+                <th scope='col' className={thClass('120px')}>Status</th>
+                <th scope='col' className={thClass('150px')}>Actions</th>
+                <th scope='col' className={thClass('120px')}>Details</th>
+                <th scope='col' className={thClass('180px')}>Time</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">

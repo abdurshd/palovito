@@ -1,51 +1,35 @@
 import { useState, useEffect } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '../ui/dialog';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { Textarea } from '../ui/textarea';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from '../ui/dialog';
+import { Label } from '../ui/label';
 import type { Category } from '../../types/Menu';
 
-interface CategoryEditDialogProps {
+interface CategoryEditFormProps {
   category: Category | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSave: (id: string, name: string, description: string) => Promise<void>;
+  onSave: (category: Partial<Category>) => void;
 }
 
-export function CategoryEditForm({ category, open, onOpenChange, onSave }: CategoryEditDialogProps) {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [error, setError] = useState<string | null>(null);
+export function CategoryEditForm({ category, open, onOpenChange, onSave }: CategoryEditFormProps) {
+  const [formData, setFormData] = useState({
+    name: '',
+    description: ''
+  });
 
   useEffect(() => {
-    if (!open) {
-      setName('');
-      setDescription('');
-      setError(null);
-    } else if (category) {
-      setName(category.name);
-      setDescription(category.description || '');
+    if (category) {
+      setFormData({
+        name: category.name,
+        description: category.description || ''
+      });
     }
-  }, [open, category]);
+  }, [category]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!category) return;
-    setError(null);
-
-    try {
-      await onSave(category.id, name, description);
-      onOpenChange(false);
-    } catch (error) {
-      setError(error instanceof Error ? error.message : 'Failed to update category');
-      // Form data persists on error
-    }
+    onSave({ ...formData, id: category?.id });
   };
 
   return (
@@ -54,39 +38,28 @@ export function CategoryEditForm({ category, open, onOpenChange, onSave }: Categ
         <DialogHeader>
           <DialogTitle>Edit Category</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {error && (
-            <div className="text-red-500 text-sm p-2 bg-red-50 rounded">
-              {error}
+        <form onSubmit={handleSubmit}>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="edit-name">Name</Label>
+              <Input 
+                id="edit-name"
+                value={formData.name}
+                onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                required
+              />
             </div>
-          )}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Name</label>
-            <Input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              maxLength={50}
-              minLength={2}
-              className="mt-1"
-            />
+            <div>
+              <Label htmlFor="edit-description">Description</Label>
+              <Input 
+                id="edit-description"
+                value={formData.description}
+                onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+              />
+            </div>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Description</label>
-            <Textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              maxLength={255}
-              className="mt-1"
-            />
-          </div>
-          <DialogFooter>
-            <Button type="button" styleType='red' onClick={() => onOpenChange(false)}>
-              Cancel
-            </Button>
-            <Button type="submit" styleType='green'>
-              Save Changes
-            </Button>
+          <DialogFooter className="mt-6">
+            <Button type="submit">Save Changes</Button>
           </DialogFooter>
         </form>
       </DialogContent>

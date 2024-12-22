@@ -16,6 +16,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '../components/ui/alert-dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 
 export function CategoryPage() {
   const { toast } = useToast();
@@ -24,6 +25,7 @@ export function CategoryPage() {
   const [isAddingCategory, setIsAddingCategory] = useState(false);
   const [categoryToDelete, setCategoryToDelete] = useState<string | null>(null);
   const [categoryToEdit, setCategoryToEdit] = useState<Category | null>(null);
+  const [formData, setFormData] = useState({ parentId: '_none' });
 
   useEffect(() => {
     fetchCategories();
@@ -44,9 +46,9 @@ export function CategoryPage() {
     }
   };
 
-  const handleAddCategory = async (name: string, description: string) => {
+  const handleAddCategory = async (categoryData: Partial<Category>) => {
     try {
-      await categoryService.createCategory(name, description);
+      await categoryService.createCategory(categoryData.name!, categoryData.description!);
       await fetchCategories();
       setIsAddingCategory(false);
       toast({
@@ -83,10 +85,11 @@ export function CategoryPage() {
     }
   };
 
-  const handleEditCategory = async (id: string, name: string, description: string) => {
+  const handleEditCategory = async (category: Partial<Category>) => {
     try {
-      await categoryService.updateCategory(id, name, description);
+      await categoryService.updateCategory(category.id!, category.name!, category.description!);
       await fetchCategories();
+      setCategoryToEdit(null);
       toast({
         title: 'Success',
         description: 'Category updated successfully',
@@ -109,6 +112,7 @@ export function CategoryPage() {
       <div className="flex flex-col h-[calc(100vh-theme(spacing.32))]">
         <div className="bg-white p-4 rounded-lg shadow mb-6">
           <Button
+            id="add-new-category"
             onClick={() => setIsAddingCategory(true)}
             className="w-full py-8 text-lg"
           >
@@ -142,6 +146,7 @@ export function CategoryPage() {
                         size="sm"
                         className="text-blue-600 hover:text-blue-800 hover:bg-blue-100"
                         onClick={() => setCategoryToEdit(category)}
+                        aria-label="Edit category"
                       >
                         <Pencil size={16} />
                       </Button>
@@ -150,6 +155,7 @@ export function CategoryPage() {
                         size="sm"
                         className="text-red-600 hover:text-red-800 hover:bg-red-100"
                         onClick={() => setCategoryToDelete(category.id)}
+                        aria-label="Delete category"
                       >
                         <Trash2 size={16} />
                       </Button>
@@ -194,6 +200,20 @@ export function CategoryPage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <Select value={formData.parentId} onValueChange={(value) => setFormData(prev => ({ ...prev, parentId: value }))}>
+        <SelectTrigger aria-label="Select parent category">
+          <SelectValue placeholder="Select Parent Category" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="_none">No Parent Category</SelectItem>
+          {categories.map(category => (
+            <SelectItem key={category.id} value={category.id}>
+              {category.name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </div>
   );
 } 

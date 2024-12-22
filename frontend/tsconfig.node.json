@@ -12,6 +12,8 @@
     "moduleDetection": "force",
     "noEmit": true,
     "noImplicitAny": true,
+    "types": ["node", "vite/client"],
+
 
     /* Linting */
     "strict": false,

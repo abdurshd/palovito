@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Sidebar } from './Sidebar';
+import { AppBar } from './AppBar';
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -9,7 +10,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <Sidebar isOpen={isSidebarOpen} onToggle={() => setIsSidebarOpen(!isSidebarOpen)} />
       
       <div className="flex flex-col flex-1">
-        <main className={`flex-1 overflow-auto transition-all duration-200 ${isSidebarOpen ? 'ml-64' : 'ml-20'}`}>
+        <AppBar />
+        <main className={`flex-1 overflow-auto transition-all duration-200 ${isSidebarOpen ? 'md:ml-64' : 'md:ml-20'}`}>
           {children}
         </main>
         

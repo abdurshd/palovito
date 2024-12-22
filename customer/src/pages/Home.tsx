@@ -32,6 +32,10 @@ export function Home() {
           <h3 className="text-lg font-semibold mb-2">Track Orders</h3>
           <p className="text-gray-600">Real-time updates on your order status</p>
         </div>
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h3 className="text-lg font-semibold mb-2">Order History</h3>
+          <p className="text-gray-600">View your past orders and track your order history</p>
+        </div>
       </div>
     </div>
   );

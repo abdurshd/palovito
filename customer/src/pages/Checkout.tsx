@@ -29,7 +29,7 @@ export function Checkout() {
       toast({
         title: 'Success',
         description: 'Your order has been placed successfully!',
-        variant: 'default'
+        variant: 'success'
       });
       navigate(`/orders/${order.id}`);
     } catch (error) {

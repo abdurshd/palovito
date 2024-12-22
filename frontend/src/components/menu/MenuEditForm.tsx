@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
-import { Select } from '../ui/select';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../ui/select';
 import { Switch } from '../ui/switch';
 import {
   Dialog,
@@ -115,18 +115,18 @@ export function MenuEditForm({ menu, open, onOpenChange, onSave, categories }: M
             </div>
             <div className="space-y-2">
               <label htmlFor="editCategory" className="text-sm font-medium">Category</label>
-              <Select
-                id="editCategory"
-                value={formData.categoryId}
-                onValueChange={(value) => setFormData(prev => ({ ...prev, categoryId: value }))}
-                required
-              >
-                <option value="">Select Category</option>
-                {categories.map(category => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
+              <Select value={formData.categoryId} onValueChange={(value) => setFormData(prev => ({ ...prev, categoryId: value }))}>
+                <SelectTrigger id="editCategory">
+                  <SelectValue placeholder="Select Category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="_empty">Select Category</SelectItem>
+                  {categories.map(category => (
+                    <SelectItem key={category.id} value={category.id}>
+                      {category.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
               </Select>
             </div>
           </div>
@@ -280,10 +280,10 @@ export function MenuEditForm({ menu, open, onOpenChange, onSave, categories }: M
           </div>
 
           <DialogFooter>
-            <Button type="button" className="hover:bg-red-100 hover:border-2 hover:border-red-500 transition-all duration-300" onClick={() => onOpenChange(false)}>
+            <Button type="button" onClick={() => onOpenChange(false)}>
               Cancel
             </Button>
-            <Button type="submit" className="hover:bg-green-100 hover:border-2 hover:border-green-500 transition-all duration-300">
+            <Button type="submit">
               Save Changes
             </Button>
           </DialogFooter>

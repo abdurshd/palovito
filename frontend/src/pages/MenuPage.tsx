@@ -17,7 +17,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '../components/ui/alert-dialog';
-import { Select } from '../components/ui/select';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../components/ui/select';
 import { MenuCard } from '../components/menu/MenuCard';
 
 export function MenuPage() {
@@ -40,12 +40,18 @@ export function MenuPage() {
         menuService.getAllMenus(),
         categoryService.getAllCategories()
       ]);
+      
+      if (!menuData || !categoryData) {
+        throw new Error('Failed to fetch data: Received null response');
+      }
+      
       setMenus(menuData);
       setCategories(categoryData);
     } catch (error) {
+      console.error('Fetch error:', error);
       toast({
         title: 'Error',
-        description: 'Failed to fetch data',
+        description: error instanceof Error ? error.message : 'Failed to fetch data. Please try again.',
         variant: 'error'
       });
     } finally {
@@ -110,7 +116,7 @@ export function MenuPage() {
     }
   };
 
-  const filteredMenus = selectedCategory
+  const filteredMenus = selectedCategory && selectedCategory !== 'all'
     ? menus.filter(menu => menu.category.id === selectedCategory)
     : menus;
 
@@ -133,16 +139,23 @@ export function MenuPage() {
 
         <div className="mb-4 flex gap-2">
           <div className="flex justify-between items-center">Filter by Category</div>
-          <Select
-            value={selectedCategory}
+          <Select 
+            value={selectedCategory} 
             onValueChange={setSelectedCategory}
           >
-            <option value="">All Categories</option>
-            {categories.map(category => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
+            <SelectTrigger aria-label="Filter by category">
+              <SelectValue placeholder="All Categories" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all" data-value="all">
+                All Categories
+              </SelectItem>
+              {categories.map(category => (
+                <SelectItem key={category.id} value={category.id} data-value={category.id}>
+                  {category.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
           </Select>
         </div>
 

@@ -27,9 +27,10 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMobileMenuOpen(true)}
-        className="fixed top-4 left-4 p-2 rounded-lg hover:bg-gray-100 md:hidden z-50"
+        className="fixed top-4 left-4 p-2 rounded-lg bg-white shadow-md border border-gray-200 hover:bg-gray-100 md:hidden z-50 transition-colors"
+        aria-label="Open menu"
       >
-        <Menu size={24} />
+        <Menu size={24} className="text-gray-700" />
       </button>
 
       {/* Mobile Menu */}

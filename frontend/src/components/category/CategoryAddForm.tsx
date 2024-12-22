@@ -3,11 +3,12 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { useState, useEffect } from 'react';
+import { Category } from '@/types/Menu';
 
 interface CategoryFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSave: (name: string, description: string) => Promise<void>;
+  onSave: (category: Partial<Category>) => void;
 }
 
 export function CategoryAddForm({ open, onOpenChange, onSave }: CategoryFormProps) {
@@ -29,7 +30,7 @@ export function CategoryAddForm({ open, onOpenChange, onSave }: CategoryFormProp
     setError(null);
 
     try {
-      await onSave(name, description);
+      await onSave({ name, description });
       setName('');
       setDescription('');
       onOpenChange(false);
@@ -43,7 +44,7 @@ export function CategoryAddForm({ open, onOpenChange, onSave }: CategoryFormProp
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add New Category</DialogTitle>
+          <DialogTitle data-testid="add-new-category">Add New Category</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
@@ -65,7 +66,7 @@ export function CategoryAddForm({ open, onOpenChange, onSave }: CategoryFormProp
             onChange={(e) => setDescription(e.target.value)}
             maxLength={255}
           />
-          <Button type="submit" className="w-full" styleType='green'>Save Category</Button>
+          <Button type="submit" className="w-full">Save Category</Button>
         </form>
       </DialogContent>
     </Dialog>
