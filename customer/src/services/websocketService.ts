@@ -2,7 +2,6 @@ import { Client } from '@stomp/stompjs';
 
 export class WebSocketService {
   private client: Client;
-  private subscriptions: { [key: string]: () => void } = {};
 
   constructor() {
     this.client = new Client({
@@ -13,15 +12,22 @@ export class WebSocketService {
     });
   }
 
-  connect(topic: string, onMessage: (message: any) => void): Promise<void> {
+  async connect(topic: string, onMessage: (data: any) => void): Promise<void> {
     return new Promise((resolve, reject) => {
       this.client.onConnect = () => {
-        console.log('WebSocket connected');
-        const subscription = this.client.subscribe(topic, (message) => {
-          onMessage(JSON.parse(message.body));
+        console.log('Connected to WebSocket');
+        
+        // Subscribe to both topics
+        this.client.subscribe('/topic/orders', (message) => {
+          const data = JSON.parse(message.body);
+          onMessage(data);
         });
         
-        this.subscriptions[topic] = () => subscription.unsubscribe();
+        this.client.subscribe('/topic/orders/update', (message) => {
+          const data = JSON.parse(message.body);
+          onMessage(data);
+        });
+        
         resolve();
       };
 
@@ -35,9 +41,7 @@ export class WebSocketService {
   }
 
   disconnect() {
-    Object.values(this.subscriptions).forEach(unsubscribe => unsubscribe());
-    this.subscriptions = {};
-    if (this.client.active) {
+    if (this.client.connected) {
       this.client.deactivate();
     }
   }

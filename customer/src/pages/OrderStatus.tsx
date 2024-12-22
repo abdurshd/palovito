@@ -31,18 +31,17 @@ export function OrderStatus() {
         }
 
         // Then connect to WebSocket
-        await wsService.connect('/topic/orders/update', (updatedOrder) => {
-          if (mounted && updatedOrder.id === orderId) {
-            setOrder(updatedOrder);
+        await wsService.connect('/topic/orders/update', (message) => {
+          if (mounted && message.id === orderId) {
+            setOrder(message);
             setWsConnected(true);
             
-            if (updatedOrder.status === 'COMPLETED') {
+            if (message.status === 'COMPLETED') {
               toast({
                 title: 'Order Ready!',
                 description: 'Your order is ready for pickup.',
-                variant: 'default',
               });
-            } else if (updatedOrder.status === 'CANCELLED') {
+            } else if (message.status === 'CANCELLED') {
               toast({
                 title: 'Order Cancelled',
                 description: 'Your order has been cancelled.',
@@ -52,6 +51,7 @@ export function OrderStatus() {
           }
         });
       } catch (error) {
+        console.error('Error:', error);
         if (mounted) {
           toast({
             title: 'Error',
@@ -72,7 +72,11 @@ export function OrderStatus() {
   }, [orderId, toast, navigate]);
 
   if (!order) {
-    return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-gray-600">Loading order details...</div>
+      </div>
+    );
   }
 
   const statusSteps = [
@@ -113,8 +117,8 @@ export function OrderStatus() {
           <h3 className="font-semibold mb-4">Order Items</h3>
           {order.items.map((item, index) => (
             <div key={index} className="flex justify-between py-2">
-              <span>{item.menuItem.name} x {item.quantity}</span>
-              <span>${(item.menuItem.price * item.quantity).toFixed(2)}</span>
+              <span>{item.menu.name} x {item.quantity}</span>
+              <span>${(item.menu.price * item.quantity).toFixed(2)}</span>
             </div>
           ))}
         </div>

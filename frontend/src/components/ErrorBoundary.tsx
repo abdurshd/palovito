@@ -1,6 +1,5 @@
 import { Component, ErrorInfo, ReactNode } from 'react';
 
-// TODO: Add pages folder and move this file to it
 // TODO: add common error handling for the app and toast messages for succussful and failed operations, and add common loading state for the app
 
 interface Props {

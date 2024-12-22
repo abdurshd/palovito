@@ -1,10 +1,19 @@
-export interface OrderItem {
-  menuItem: {
+export interface MenuItem {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  category: {
     id: string;
     name: string;
-    price: number;
-    imageUrl?: string;
+    description: string;
   };
+  imageUrl: string;
+  available: boolean;
+}
+
+export interface OrderItem {
+  menu: MenuItem;
   quantity: number;
 }
 
