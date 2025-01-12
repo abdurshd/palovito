@@ -64,6 +64,9 @@ dependencies {
 	
 	// Add this line for Java 8 date/time support
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+	
+	implementation 'org.springframework.cloud:spring-cloud-gcp-starter'
+	implementation 'org.springframework.cloud:spring-cloud-gcp-starter-metrics'
 }
 
 tasks.withType(Test).configureEach {
