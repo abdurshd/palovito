@@ -46,6 +46,7 @@ public class OrderMapper {
     
     private OrderItem toOrderItem(OrderItemEntity entity) {
         return new OrderItem(
+            entity.getId().toString(),
             menuMapper.toModel(entity.getMenu()),
             entity.getQuantity()
         );

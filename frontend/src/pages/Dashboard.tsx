@@ -19,6 +19,7 @@ import { OrderDetailsDialog } from '../components/OrderDetailsDialog';
 export function Dashboard() {
   const { toast } = useToast();
   const [orders, setOrders] = useState<Order[]>([]);
+  const [orderToProcess, setOrderToProcess] = useState<Order | null>(null);
   const [connected, setConnected] = useState(false);
   const [loading, setLoading] = useState(true);
   const [orderToCancel, setOrderToCancel] = useState<string | null>(null);
@@ -30,6 +31,11 @@ export function Dashboard() {
 
     const handleConnect = () => {
       setConnected(true);
+      // Show any pending orders that are still in RECEIVED state
+      const pendingOrders = orders.filter(order => order.status === 'RECEIVED');
+      if (pendingOrders.length > 0) {
+        setOrderToProcess(pendingOrders[0]);
+      }
     };
 
     socketService.connect(
@@ -67,6 +73,17 @@ export function Dashboard() {
       setConnected(false);
     };
   }, []);
+
+  useEffect(() => {
+    // Only show dialog if there isn't one already showing
+    if (!orderToProcess) {
+      // Find the first order in RECEIVED state
+      const nextOrder = orders.find(order => order.status === 'RECEIVED');
+      if (nextOrder) {
+        setOrderToProcess(nextOrder);
+      }
+    }
+  }, [orders]);
 
   const handleStatusUpdate = async (orderId: string, newStatus: Order['status']) => {
     try {
@@ -261,6 +278,42 @@ export function Dashboard() {
               onClick={() => orderToComplete && handleStatusUpdate(orderToComplete, 'COMPLETED')}
             >
               Yes, complete order
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      <AlertDialog open={!!orderToProcess} onOpenChange={() => setOrderToProcess(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>New Order Received</AlertDialogTitle>
+            <AlertDialogDescription>
+              Review the order details before accepting it for processing.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <div className="space-y-4">
+            <div>
+              <p className="text-sm text-gray-500">Items</p>
+              {orderToProcess?.items.map((item, index) => (
+                <div key={index} className="flex justify-between py-1">
+                  <span>{item.menu.name} x {item.quantity}</span>
+                  <span>${(item.menu.price * item.quantity).toFixed(2)}</span>
+                </div>
+              ))}
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Total</p>
+              <p className="font-semibold">${orderToProcess?.total.toFixed(2)}</p>
+            </div>
+          </div>
+          <AlertDialogFooter>
+            <AlertDialogCancel>
+              Reject
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-green-600 hover:bg-green-700 text-white"
+              onClick={() => orderToProcess && handleStatusUpdate(orderToProcess.id, 'PROCESSING')}
+            >
+              Accept Order
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

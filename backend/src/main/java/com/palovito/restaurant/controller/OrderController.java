@@ -71,4 +71,17 @@ public class OrderController {
         }
         return ResponseEntity.ok(order);
     }
+
+    @PatchMapping("/{orderId}/items/{itemId}/quantity")
+    public ResponseEntity<Order> updateItemQuantity(
+        @PathVariable String orderId,
+        @PathVariable String itemId,
+        @RequestBody int quantity
+    ) {
+        Order updatedOrder = orderService.updateOrderQuantity(orderId, itemId, quantity);
+        if (updatedOrder == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updatedOrder);
+    }
 } 

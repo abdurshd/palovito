@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import com.palovito.restaurant.model.Order;
 import com.palovito.restaurant.model.OrderStatus;
 import com.palovito.restaurant.model.Menu;
@@ -14,7 +13,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import java.time.Duration;
 import java.util.List;
 import java.util.ArrayList;
-import org.springframework.beans.factory.annotation.Value;
 import com.palovito.restaurant.model.OrderRequest;
 import com.palovito.restaurant.model.OrderItem;
 import com.palovito.restaurant.entity.OrderEntity;
@@ -37,12 +35,6 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderRedisRepository orderRedisRepository;
     private final OrderMapper orderMapper;
-
-    @Value("${order.processing.initial-delay:5000}")
-    private long initialDelay;
-    
-    @Value("${order.processing.completion-delay:10000}")
-    private long completionDelay;
     
     @Transactional
     @Scheduled(fixedRate = 24 * 60 * 60 * 1000) // Run daily
@@ -78,7 +70,7 @@ public class OrderService {
                 throw new IllegalArgumentException("Menu item not found: " + item.getMenuId());
             }
             
-            OrderItem orderItem = new OrderItem(menu, item.getQuantity());
+            OrderItem orderItem = new OrderItem(UUID.randomUUID().toString(), menu, item.getQuantity());
             orderItems.add(orderItem);
             total += menu.getPrice().doubleValue() * item.getQuantity();
         }
@@ -100,29 +92,7 @@ public class OrderService {
         
         messagingTemplate.convertAndSend("/topic/orders", order);
         
-        CompletableFuture.runAsync(() -> processOrder(order));
         return order;
-    }
-    
-    private void processOrder(Order order) {
-        CompletableFuture.runAsync(() -> {
-            try {
-                log.info("Starting order processing - ID: {}", order.getId());
-                Thread.sleep(initialDelay);
-                
-                // Get fresh order from database
-                Order currentOrder = getOrder(order.getId());
-                if (currentOrder != null && currentOrder.getStatus() == OrderStatus.RECEIVED) {
-                    currentOrder.setStatus(OrderStatus.PROCESSING);
-                    orderRepository.save(orderMapper.toEntity(currentOrder));
-                    redisService.saveOrder(currentOrder);
-                    messagingTemplate.convertAndSend("/topic/orders/update", currentOrder);
-                }
-            } catch (InterruptedException e) {
-                log.error("Order processing interrupted - ID: {}", order.getId(), e);
-                Thread.currentThread().interrupt();
-            }
-        });
     }
     
     public Order getOrder(String orderId) {

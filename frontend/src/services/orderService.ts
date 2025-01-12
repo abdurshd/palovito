@@ -60,13 +60,26 @@ export const orderService = {
     }
   },
 
-  updateItemQuantity: async (orderId: string, itemId: string, quantity: number): Promise<Order> => {
+  updateItemQuantity: async (orderId: string, menuId: string, quantity: number): Promise<Order> => {
     try {
-      const response = await axios.patch(`${API_URL}/order/${orderId}/items/${itemId}/quantity`, {
-        quantity
-      });
+      console.log(`Updating order ${orderId}, menu ${menuId} to quantity ${quantity}`);
+      
+      const response = await axios.patch(
+        `${API_URL}/order/${orderId}/quantity`, 
+        quantity,
+        {
+          params: { menuId },
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
       return response.data;
     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data?.message || 'Failed to update item quantity';
+        throw new Error(errorMessage);
+      }
       throw new Error('Failed to update item quantity');
     }
   }
