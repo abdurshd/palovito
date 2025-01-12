@@ -13,14 +13,14 @@ export function Checkout() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (items.length === 0) return;
+    if (items?.length === 0) return;
 
     setLoading(true);
     try {
       const orderRequest = {
-        items: items.map(item => ({
-          menuId: item.menuItem.id,
-          quantity: item.quantity
+        items: items?.map(item => ({
+          menuId: item?.menuItem?.id,
+          quantity: item?.quantity
         }))
       };
 
@@ -48,18 +48,18 @@ export function Checkout() {
       <h1 className="text-2xl font-bold mb-6">Checkout</h1>
       <div className="bg-white rounded-lg shadow p-6 mb-6">
         <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
-        {items.map((item) => (
-          <div key={item.menuItem.id} className="flex justify-between py-2">
+        {items?.map((item) => (
+          <div key={item?.menuItem?.id} className="flex justify-between py-2">
             <span>
-              {item.menuItem.name} x {item.quantity}
+              {item?.menuItem?.name} x {item?.quantity}
             </span>
-            <span>${(item.menuItem.price * item.quantity).toFixed(2)}</span>
+            <span>${(item?.menuItem?.price * item?.quantity).toFixed(2)}</span>
           </div>
         ))}
         <div className="border-t mt-4 pt-4">
           <div className="flex justify-between font-semibold">
             <span>Total</span>
-            <span>${total.toFixed(2)}</span>
+            <span>${total?.toFixed(2)}</span>
           </div>
         </div>
       </div>

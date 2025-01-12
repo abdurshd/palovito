@@ -11,6 +11,7 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    restart: always
 
   redis:
     image: redis:7-alpine
@@ -20,7 +21,10 @@ services:
       - redis_data:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf
     command: redis-server /usr/local/etc/redis/redis.conf
+    restart: always
 
 volumes:
   postgres_data:
-  redis_data: 
+    driver: local
+  redis_data:
+    driver: local 

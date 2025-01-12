@@ -38,8 +38,8 @@ export function MenuPage() {
     return <div className="flex justify-center items-center">Loading...</div>;
   }
 
-  const menusByCategory = categories.reduce((acc, category) => {
-    acc[category.id] = menus.filter(menu => menu.category.id === category.id);
+  const menusByCategory = categories?.reduce((acc, category) => {
+    acc[category?.id] = menus?.filter(menu => menu?.category?.id === category?.id);
     return acc;
   }, {} as Record<string, Menu[]>);
 
@@ -49,18 +49,18 @@ export function MenuPage() {
       
       <Tabs defaultValue={categories[0]?.id} className="w-full">
         <TabsList className="mb-8">
-          {categories.map(category => (
-            <TabsTrigger key={category.id} value={category.id}>
-              {category.name}
+          {categories?.map(category => (
+            <TabsTrigger key={category?.id} value={category?.id}>
+              {category?.name}
             </TabsTrigger>
           ))}
         </TabsList>
 
-        {categories.map(category => (
-          <TabsContent key={category.id} value={category.id}>
+        {categories?.map(category => (
+          <TabsContent key={category?.id} value={category?.id}>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {menusByCategory[category.id]?.map(menu => (
-                <MenuCard key={menu.id} menu={menu} />
+              {menusByCategory[category?.id]?.map(menu => (
+                <MenuCard key={menu?.id} menu={menu} />
               ))}
             </div>
           </TabsContent>

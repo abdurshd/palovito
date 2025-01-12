@@ -12,14 +12,14 @@ export function MenuCard({ menu, onEdit, onDelete }: MenuCardProps) {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
       <div className="relative">
-        {menu.imageUrl && (
+        {menu?.imageUrl && (
           <img
-            src={menu.imageUrl}
-            alt={menu.name}
+            src={menu?.imageUrl}
+            alt={menu?.name}
             className="w-full h-48 object-cover"
           />
         )}
-        {menu.bestSeller && (
+        {menu?.bestSeller && (
           <span className="absolute top-2 right-2 bg-yellow-400 text-black px-2 py-1 rounded-full text-sm font-semibold">
             Best Seller
           </span>
@@ -28,10 +28,10 @@ export function MenuCard({ menu, onEdit, onDelete }: MenuCardProps) {
       <div className="p-4">
         <div className="flex justify-between items-start">
           <div>
-            <h3 className="text-lg font-semibold">{menu.name}</h3>
-            <p className="text-sm text-gray-600">{menu.category.name}</p>
-            <p className="text-gray-600 mt-1">{menu.description}</p>
-            <p className="text-lg font-bold mt-2">${menu.price}</p>
+            <h3 className="text-lg font-semibold">{menu?.name}</h3>
+            <p className="text-sm text-gray-600">{menu?.category?.name}</p>
+            <p className="text-gray-600 mt-1">{menu?.description}</p>
+            <p className="text-lg font-bold mt-2">${menu?.price}</p>
           </div>
           <div className="flex gap-2">
             <Button
@@ -57,12 +57,12 @@ export function MenuCard({ menu, onEdit, onDelete }: MenuCardProps) {
         <div className="flex items-center gap-3 mt-4 text-sm text-gray-600">
           <div className="flex items-center gap-1">
             <Clock size={16} />
-            <span>{menu.preparationTime} min</span>
+            <span>{menu?.preparationTime} min</span>
           </div>
-          {menu.spicyLevel > 0 && (
+          {menu?.spicyLevel > 0 && (
             <div className="flex items-center gap-1">
               <Flame size={16} className="text-red-500" />
-              <span>{Array(menu.spicyLevel).fill('🌶️').join('')}</span>
+              <span>{Array(menu?.spicyLevel).fill('🌶️').join('')}</span>
             </div>
           )}
         </div>

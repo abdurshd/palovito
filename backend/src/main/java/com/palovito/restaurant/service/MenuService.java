@@ -3,25 +3,30 @@ package com.palovito.restaurant.service;
 import com.palovito.restaurant.model.Menu;
 import com.palovito.restaurant.model.Category;
 import com.palovito.restaurant.model.MenuRequest;
+import com.palovito.restaurant.entity.MenuEntity;
+import com.palovito.restaurant.mapper.MenuMapper;
+import com.palovito.restaurant.repository.MenuRepository;
+import com.palovito.restaurant.mapper.CategoryMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+import java.math.BigDecimal;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class MenuService {
-    private final Map<String, Menu> menus = new ConcurrentHashMap<>();
+    private final MenuRepository menuRepository;
     private final CategoryService categoryService;
     private final MenuCategoryService menuCategoryService;
+    private final MenuMapper menuMapper;
+    private final CategoryMapper categoryMapper;
 
     public Menu createMenu(MenuRequest request) {
         Category category = categoryService.getCategory(request.getCategoryId());
@@ -39,14 +44,17 @@ public class MenuService {
                 category,
                 request.getImageUrl(),
                 request.isBestSeller(),
-                true,
+                request.isAvailable(),
                 request.getPreparationTime(),
                 request.getSpicyLevel(),
                 request.getAllergens(),
                 request.getNutritionalInfo()
             );
 
-            menus.put(menu.getId(), menu);
+            // Save to database
+            MenuEntity entity = menuMapper.toEntity(menu);
+            menuRepository.save(entity);
+            
             menuCategoryService.addMenuToCategory(category.getId(), menu.getId());
             log.info("Menu item created - ID: {}, Name: {}", menu.getId(), menu.getName());
             return menu;
@@ -57,62 +65,68 @@ public class MenuService {
     }
 
     public List<Menu> getAllMenus() {
-        return new ArrayList<>(menus.values());
-    }
-
-    public List<Menu> getMenusByCategory(String categoryId) {
-        return menus.values().stream()
-            .filter(menu -> menu.getCategory().getId().equals(categoryId))
+        return menuRepository.findAll().stream()
+            .map(menuMapper::toModel)
             .collect(Collectors.toList());
     }
 
     public Menu getMenu(String id) {
-        Menu menu = menus.get(id);
-        if (menu == null) {
-            throw new IllegalArgumentException("Menu not found");
-        }
-        return menu;
+        return menuRepository.findById(id)
+            .map(menuMapper::toModel)
+            .orElse(null);
     }
 
+    public List<Menu> getMenusByCategory(String categoryId) {
+        // Implement logic to get menus by category
+        return menuRepository.findByCategoryId(categoryId).stream()
+            .map(menuMapper::toModel)
+            .collect(Collectors.toList());
+    }
+
+    
     public Menu updateMenu(String id, MenuRequest request) {
-        Menu existingMenu = menus.get(id);
-        if (existingMenu == null) {
-            log.error("Menu not found with ID: {}", id);
-            throw new IllegalArgumentException("Menu not found");
-        }
+        return menuRepository.findById(id)
+            .map(existingMenu -> {
+                existingMenu.setName(request.getName());
+                existingMenu.setDescription(request.getDescription());
+                existingMenu.setPrice(BigDecimal.valueOf(request.getPrice()));
+                existingMenu.setCategory(categoryMapper.toEntity(categoryService.getCategory(request.getCategoryId())));
+                existingMenu.setImageUrl(request.getImageUrl());
+                existingMenu.setBestSeller(request.isBestSeller());
+                existingMenu.setAvailable(request.isAvailable());
+                existingMenu.setPreparationTime(request.getPreparationTime());
+                existingMenu.setSpicyLevel(request.getSpicyLevel());
+                existingMenu.setAllergens(String.join(",", request.getAllergens()));
+                existingMenu.setNutritionalInfo(request.getNutritionalInfo().toString());
+                MenuEntity updatedEntity = menuRepository.save(existingMenu);
+                return menuMapper.toModel(updatedEntity);
+            })
+            .orElseThrow(() -> new RuntimeException("Menu not found with id: " + id));
+    }
 
-        Category category = categoryService.getCategory(request.getCategoryId());
-        if (category == null) {
-            log.error("Category not found with ID: {}", request.getCategoryId());
-            throw new IllegalArgumentException("Category not found");
-        }
-
+    @Transactional
+    public String deleteMenu(String id) {
         try {
-            Menu updatedMenu = new Menu(
-                id,
-                request.getName(),
-                request.getDescription(),
-                request.getPrice(),
-                category,
-                request.getImageUrl(),
-                request.isBestSeller(),
-                request.isAvailable(),
-                request.getPreparationTime(),
-                request.getSpicyLevel(),
-                request.getAllergens(),
-                request.getNutritionalInfo()
-            );
-
-            menus.put(id, updatedMenu);
-            log.info("Menu item updated - ID: {}, Name: {}", id, updatedMenu.getName());
-            return updatedMenu;
+            MenuEntity menu = menuRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Menu item not found with id: " + id));
+            
+            // Remove from categories first
+            menuCategoryService.removeMenuFromAllCategories(id);
+            
+            // Clear order items
+            menu.getOrderItems().clear();
+            
+            // Then delete the menu
+            menuRepository.delete(menu);
+            log.info("Menu item deleted - ID: {}", id);
+            return menu.getName() + " deleted successfully from " + menu.getCategory().getName() + " list";
         } catch (Exception e) {
-            log.error("Error updating menu item: {}", e.getMessage());
-            throw new RuntimeException("Failed to update menu item", e);
+            log.error("Error deleting menu item: {}", e.getMessage());
+            throw new RuntimeException("Failed to delete menu item: " + e.getMessage(), e);
         }
     }
 
-    public void deleteAllMenus() {
-        menus.clear();
+    public boolean existsById(String id) {
+        return menuRepository.existsById(id);
     }
 } 

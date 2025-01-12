@@ -49,4 +49,20 @@ public class MenuController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteMenu(@PathVariable String id) {
+        try {
+            if (!menuService.existsById(id)) {
+                return ResponseEntity.notFound().build();
+            }
+            String message = menuService.deleteMenu(id);
+            return ResponseEntity.ok(message);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error deleting menu item: " + e.getMessage());
+        }
+    }
 } 

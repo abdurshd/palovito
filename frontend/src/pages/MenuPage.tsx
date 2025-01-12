@@ -117,7 +117,7 @@ export function MenuPage() {
   };
 
   const filteredMenus = selectedCategory && selectedCategory !== 'all'
-    ? menus.filter(menu => menu.category.id === selectedCategory)
+    ? menus?.filter(menu => menu?.category?.id === selectedCategory)
     : menus;
 
   if (loading) {
@@ -150,7 +150,7 @@ export function MenuPage() {
               <SelectItem value="all" data-value="all">
                 All Categories
               </SelectItem>
-              {categories.map(category => (
+              {categories?.map(category => (
                 <SelectItem key={category.id} value={category.id} data-value={category.id}>
                   {category.name}
                 </SelectItem>
@@ -160,7 +160,7 @@ export function MenuPage() {
         </div>
 
         <div className="flex-1 overflow-auto">
-          {menus.length === 0 ? (
+          {menus?.length === 0 ? (
             <div className="text-center py-12 bg-white rounded-lg shadow">
               <h3 className="text-lg font-medium text-gray-900">No menu items yet</h3>
               <p className="mt-2 text-sm text-gray-500">
@@ -169,9 +169,9 @@ export function MenuPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredMenus.map(menu => (
+              {filteredMenus?.map(menu => (
                 <MenuCard 
-                  key={menu.id} 
+                  key={menu?.id} 
                   menu={menu}
                   onEdit={setMenuToEdit}
                   onDelete={setMenuToDelete}

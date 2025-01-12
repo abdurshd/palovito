@@ -86,7 +86,7 @@ export function OrderStatus() {
     { status: 'CANCELLED', icon: XCircle, label: 'Cancelled', color: 'text-red-500' }
   ];
 
-  const currentStep = statusSteps.find(step => step.status === order.status);
+  const currentStep = statusSteps?.find(step => step?.status === order?.status);
 
   return (
     <div className="max-w-2xl mx-auto p-6">
@@ -96,11 +96,11 @@ export function OrderStatus() {
         <div className="flex justify-between mb-6">
           <div>
             <p className="text-sm text-gray-500">Order ID</p>
-            <p className="font-semibold">{order.id}</p>
+            <p className="font-semibold">{order?.id}</p>
           </div>
           <div className="text-right">
             <p className="text-sm text-gray-500">Total</p>
-            <p className="font-semibold">${order.total.toFixed(2)}</p>
+            <p className="font-semibold">${order?.total?.toFixed(2)}</p>
           </div>
         </div>
 
@@ -115,10 +115,10 @@ export function OrderStatus() {
 
         <div className="mt-6">
           <h3 className="font-semibold mb-4">Order Items</h3>
-          {order.items.map((item, index) => (
+            {order?.items?.map((item, index) => (
             <div key={index} className="flex justify-between py-2">
-              <span>{item.menu.name} x {item.quantity}</span>
-              <span>${(item.menu.price * item.quantity).toFixed(2)}</span>
+              <span>{item?.menu?.name} x {item?.quantity}</span>
+              <span>${(item?.menu?.price * item?.quantity).toFixed(2)}</span>
             </div>
           ))}
         </div>

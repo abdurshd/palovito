@@ -3,8 +3,8 @@ package com.palovito.restaurant.service;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+// import java.util.Map;
+// import java.util.concurrent.ConcurrentHashMap;
 import java.util.UUID;
 import java.time.Instant;
 import java.util.concurrent.CompletableFuture;
@@ -21,20 +21,22 @@ import com.palovito.restaurant.model.OrderRequest;
 import com.palovito.restaurant.model.OrderItem;
 import com.palovito.restaurant.entity.OrderEntity;
 import com.palovito.restaurant.repository.OrderRepository;
-import com.palovito.restaurant.service.OrderRedisService;
+import com.palovito.restaurant.repository.OrderRedisRepository;
+// import com.palovito.restaurant.service.OrderRedisService;
 import com.palovito.restaurant.mapper.OrderMapper;
+import java.util.stream.Collectors;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.Optional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderService {
-    private final Map<String, Order> orders = new ConcurrentHashMap<>();
-    private final Map<String, CompletableFuture<?>> processingOrders = new ConcurrentHashMap<>();
-    private final Map<String, Boolean> manuallyUpdatedOrders = new ConcurrentHashMap<>();
     private final SimpMessagingTemplate messagingTemplate;
     private final MenuService menuService;
     private final OrderRedisService redisService;
     private final OrderRepository orderRepository;
+    private final OrderRedisRepository orderRedisRepository;
     private final OrderMapper orderMapper;
     
     @Value("${order.processing.initial-delay:5000}")
@@ -43,15 +45,17 @@ public class OrderService {
     @Value("${order.processing.completion-delay:10000}")
     private long completionDelay;
     
+    @Transactional
     @Scheduled(fixedRate = 24 * 60 * 60 * 1000) // Run daily
     public void cleanupOldOrders() {
         Instant cutoff = Instant.now().minus(Duration.ofDays(1));
-        orders.entrySet().removeIf(entry -> 
-            Instant.parse(entry.getValue().getTimestamp()).isBefore(cutoff));
+        orderRepository.deleteByTimestampBefore(cutoff);
     }
     
     public List<Order> getAllOrders() {
-        return new ArrayList<>(orders.values());
+        return orderRepository.findAll().stream()
+            .map(orderMapper::toModel)
+            .collect(Collectors.toList());
     }
     
     public Order createOrder(OrderRequest request) {
@@ -77,58 +81,49 @@ public class OrderService {
             UUID.randomUUID().toString(),
             orderItems,
             OrderStatus.RECEIVED,
-            Instant.now().toString(),
+            Instant.now(),
             total
         );
         
-        orders.put(order.getId(), order);
-        manuallyUpdatedOrders.put(order.getId(), false);
+        // Save to database
+        OrderEntity entity = orderMapper.toEntity(order);
+        orderRepository.save(entity);
         
-        // Save to Redis for immediate access
-        redisService.saveOrder(order);
-        
-        // Async save to PostgreSQL
-        CompletableFuture.runAsync(() -> {
-            OrderEntity entity = orderMapper.toEntity(order);
-            orderRepository.save(entity);
-        });
+        // Save to Redis
+        orderRedisRepository.save(order);
         
         messagingTemplate.convertAndSend("/topic/orders", order);
         
-        if (!manuallyUpdatedOrders.get(order.getId())) {
-            CompletableFuture.runAsync(() -> processOrder(order));
-        }
+        CompletableFuture.runAsync(() -> processOrder(order));
         return order;
     }
     
     private void processOrder(Order order) {
-        CompletableFuture<?> future = CompletableFuture.runAsync(() -> {
+        CompletableFuture.runAsync(() -> {
             try {
                 log.info("Starting order processing - ID: {}", order.getId());
                 Thread.sleep(initialDelay);
                 
-                if (!manuallyUpdatedOrders.get(order.getId()) && 
-                    orders.get(order.getId()).getStatus() == OrderStatus.RECEIVED) {
-                    order.setStatus(OrderStatus.PROCESSING);
-                    orders.put(order.getId(), order);
-                    log.info("Order status updated to PROCESSING - ID: {}", order.getId());
-                    messagingTemplate.convertAndSend("/topic/orders/update", order);
+                // Get fresh order from database
+                Order currentOrder = getOrder(order.getId());
+                if (currentOrder != null && currentOrder.getStatus() == OrderStatus.RECEIVED) {
+                    currentOrder.setStatus(OrderStatus.PROCESSING);
+                    orderRepository.save(orderMapper.toEntity(currentOrder));
+                    redisService.saveOrder(currentOrder);
+                    messagingTemplate.convertAndSend("/topic/orders/update", currentOrder);
                 }
             } catch (InterruptedException e) {
                 log.error("Order processing interrupted - ID: {}", order.getId(), e);
                 Thread.currentThread().interrupt();
-            } finally {
-                processingOrders.remove(order.getId());
             }
         });
-        processingOrders.put(order.getId(), future);
     }
     
     public Order getOrder(String orderId) {
         // Try Redis first
-        Order order = redisService.getOrder(orderId);
-        if (order != null) {
-            return order;
+        Optional<Order> order = orderRedisRepository.findById(orderId);
+        if (order.isPresent()) {
+            return order.get();
         }
         
         // Fallback to PostgreSQL
@@ -138,19 +133,19 @@ public class OrderService {
     }
     
     public Order updateOrderStatus(String orderId, OrderStatus newStatus) {
-        Order order = orders.get(orderId);
+        Order order = getOrder(orderId);
         if (order != null) {
             order.setStatus(newStatus);
-            orders.put(orderId, order);
+            orderRepository.save(orderMapper.toEntity(order));
+            redisService.saveOrder(order);
             messagingTemplate.convertAndSend("/topic/orders/update", order);
-            log.info("Order status updated - ID: {}, New Status: {}", orderId, newStatus);
             return order;
         }
         return null;
     }
     
     public Order updateOrderQuantity(String orderId, String menuId, int newQuantity) {
-        Order order = orders.get(orderId);
+        Order order = getOrder(orderId);
         if (order != null && order.getStatus() != OrderStatus.COMPLETED) {
             if (newQuantity <= 0) {
                 throw new IllegalArgumentException("Quantity must be greater than 0");
@@ -169,30 +164,22 @@ public class OrderService {
                 .sum();
             order.setTotal(total);
             
-            orders.put(orderId, order);
+            // Save updates
+            orderRepository.save(orderMapper.toEntity(order));
+            redisService.saveOrder(order);
             messagingTemplate.convertAndSend("/topic/orders/update", order);
-            log.info("Order quantity updated - ID: {}, Menu: {}, New Quantity: {}", orderId, menuId, newQuantity);
+            
             return order;
         }
         return null;
     }
     
     public Order cancelOrder(String orderId) {
-        Order order = orders.get(orderId);
+        Order order = getOrder(orderId);
         if (order != null && order.getStatus() != OrderStatus.COMPLETED) {
-            // Cancel any ongoing automatic processing
-            CompletableFuture<?> processingFuture = processingOrders.get(orderId);
-            if (processingFuture != null) {
-                processingFuture.cancel(true);
-                processingOrders.remove(orderId);
-            }
-            
-            // Mark as manually updated to prevent further automatic updates
-            manuallyUpdatedOrders.put(orderId, true);
-            
-            // Update status to cancelled
             order.setStatus(OrderStatus.CANCELLED);
-            orders.put(orderId, order);
+            orderRepository.save(orderMapper.toEntity(order));
+            redisService.saveOrder(order);
             messagingTemplate.convertAndSend("/topic/orders/update", order);
             log.info("Order cancelled - ID: {}", orderId);
             return order;

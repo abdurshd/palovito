@@ -6,6 +6,8 @@ import lombok.Data;
 import java.time.Instant;
 import java.util.List;
 
+import org.springframework.data.redis.core.RedisHash;
+
 @Entity
 @Table(name = "orders")
 @Data

@@ -50,17 +50,17 @@ export function MenuEditForm({ menu, open, onOpenChange, onSave, categories }: M
       setError(null);
     } else if (menu) {
       setFormData({
-        name: menu.name,
-        description: menu.description,
-        price: menu.price,
-        categoryId: menu.category.id,
-        imageUrl: menu.imageUrl,
-        bestSeller: menu.bestSeller,
-        available: menu.available,
-        preparationTime: menu.preparationTime || 0,
-        spicyLevel: menu.spicyLevel,
-        allergens: menu.allergens?.join(', ') || '',
-        nutritionalInfo: menu.nutritionalInfo || {
+        name: menu?.name,
+        description: menu?.description,
+        price: menu?.price,
+        categoryId: menu?.category?.id,
+        imageUrl: menu?.imageUrl,
+        bestSeller: menu?.bestSeller,
+        available: menu?.available,
+        preparationTime: menu?.preparationTime || 0,
+        spicyLevel: menu?.spicyLevel,
+        allergens: menu?.allergens?.join(', ') || '',
+        nutritionalInfo: menu?.nutritionalInfo || {
           calories: 0,
           protein: 0,
           carbs: 0,
@@ -76,7 +76,7 @@ export function MenuEditForm({ menu, open, onOpenChange, onSave, categories }: M
     setError(null);
 
     try {
-      const category = categories.find(c => c.id === formData.categoryId);
+      const category = categories?.find(c => c?.id === formData?.categoryId);
       if (!category) throw new Error('Category not found');
 
       await onSave(menu.id, {
@@ -121,9 +121,9 @@ export function MenuEditForm({ menu, open, onOpenChange, onSave, categories }: M
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="_empty">Select Category</SelectItem>
-                  {categories.map(category => (
-                    <SelectItem key={category.id} value={category.id}>
-                      {category.name}
+                  {categories?.map(category => (
+                    <SelectItem key={category?.id} value={category?.id}>
+                      {category?.name}
                     </SelectItem>
                   ))}
                 </SelectContent>

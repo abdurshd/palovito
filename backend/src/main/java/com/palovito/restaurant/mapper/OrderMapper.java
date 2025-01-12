@@ -21,7 +21,7 @@ public class OrderMapper {
         OrderEntity entity = new OrderEntity();
         entity.setId(order.getId());
         entity.setStatus(order.getStatus());
-        entity.setTimestamp(Instant.parse(order.getTimestamp()));
+        entity.setTimestamp(order.getTimestamp());
         entity.setTotal(order.getTotal());
         
         entity.setItems(order.getItems().stream()
@@ -35,7 +35,7 @@ public class OrderMapper {
         return Order.builder()
             .id(entity.getId())
             .status(entity.getStatus())
-            .timestamp(entity.getTimestamp().toString())
+            .timestamp(entity.getTimestamp())
             .total(entity.getTotal())
             .items(entity.getItems().stream()
                 .map(this::toOrderItem)
