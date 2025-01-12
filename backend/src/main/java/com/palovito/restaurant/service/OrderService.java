@@ -3,10 +3,8 @@ package com.palovito.restaurant.service;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-// import java.util.Map;
-// import java.util.concurrent.ConcurrentHashMap;
+
 import java.util.UUID;
-import java.time.Instant;
 import java.util.concurrent.CompletableFuture;
 import com.palovito.restaurant.model.Order;
 import com.palovito.restaurant.model.OrderStatus;
@@ -22,11 +20,12 @@ import com.palovito.restaurant.model.OrderItem;
 import com.palovito.restaurant.entity.OrderEntity;
 import com.palovito.restaurant.repository.OrderRepository;
 import com.palovito.restaurant.repository.OrderRedisRepository;
-// import com.palovito.restaurant.service.OrderRedisService;
 import com.palovito.restaurant.mapper.OrderMapper;
 import java.util.stream.Collectors;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Slf4j
 @Service
@@ -38,7 +37,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderRedisRepository orderRedisRepository;
     private final OrderMapper orderMapper;
-    
+
     @Value("${order.processing.initial-delay:5000}")
     private long initialDelay;
     
@@ -48,7 +47,14 @@ public class OrderService {
     @Transactional
     @Scheduled(fixedRate = 24 * 60 * 60 * 1000) // Run daily
     public void cleanupOldOrders() {
-        Instant cutoff = Instant.now().minus(Duration.ofDays(1));
+        String cutoff = LocalDateTime.now()
+            .minus(Duration.ofDays(1))
+            .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        
+        // First delete order items
+        orderRepository.deleteOrderItemsByTimestampBefore(cutoff);
+        
+        // Then delete orders
         orderRepository.deleteByTimestampBefore(cutoff);
     }
     
@@ -77,13 +83,13 @@ public class OrderService {
             total += menu.getPrice().doubleValue() * item.getQuantity();
         }
 
-        Order order = new Order(
-            UUID.randomUUID().toString(),
-            orderItems,
-            OrderStatus.RECEIVED,
-            Instant.now(),
-            total
-        );
+        Order order = Order.builder()
+            .id(UUID.randomUUID().toString())
+            .items(orderItems)
+            .status(OrderStatus.RECEIVED)
+            .timestamp(LocalDateTime.now().toString())
+            .total(total)
+            .build();
         
         // Save to database
         OrderEntity entity = orderMapper.toEntity(order);

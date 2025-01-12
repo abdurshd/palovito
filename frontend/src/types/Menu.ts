@@ -9,7 +9,8 @@ interface Menu {
   name: string;
   description: string;
   price: number;
-  category: Category;
+  categoryId?: string;
+  category?: Category;
   imageUrl: string;
   bestSeller: boolean;
   available: boolean;

@@ -3,10 +3,8 @@ package com.palovito.restaurant.entity;
 import com.palovito.restaurant.model.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Data;
-import java.time.Instant;
 import java.util.List;
-
-import org.springframework.data.redis.core.RedisHash;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "orders")
@@ -15,13 +13,12 @@ public class OrderEntity {
     @Id
     private String id;
     
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "order_id")
-    private List<OrderItemEntity> items;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItemEntity> items = new ArrayList<>();
     
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
     
-    private Instant timestamp;
+    private String timestamp;
     private double total;
 } 

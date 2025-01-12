@@ -4,9 +4,7 @@ import com.palovito.restaurant.entity.OrderEntity;
 import com.palovito.restaurant.entity.OrderItemEntity;
 import com.palovito.restaurant.model.Order;
 import com.palovito.restaurant.model.OrderItem;
-import com.palovito.restaurant.model.OrderStatus;
 import org.springframework.stereotype.Component;
-import java.time.Instant;
 import java.util.stream.Collectors;
 
 @Component
@@ -17,17 +15,13 @@ public class OrderMapper {
         this.menuMapper = menuMapper;
     }
     
-    public OrderEntity toEntity(Order order) {
+    public OrderEntity toEntity(Order model) {
         OrderEntity entity = new OrderEntity();
-        entity.setId(order.getId());
-        entity.setStatus(order.getStatus());
-        entity.setTimestamp(order.getTimestamp());
-        entity.setTotal(order.getTotal());
-        
-        entity.setItems(order.getItems().stream()
-            .map(this::toOrderItemEntity)
-            .collect(Collectors.toList()));
-            
+        entity.setId(model.getId());
+        entity.setItems(model.getItems().stream().map(this::toEntity).collect(Collectors.toList()));
+        entity.setStatus(model.getStatus());
+        entity.setTimestamp(model.getTimestamp());
+        entity.setTotal(model.getTotal());
         return entity;
     }
     
@@ -43,10 +37,9 @@ public class OrderMapper {
             .build();
     }
     
-    private OrderItemEntity toOrderItemEntity(OrderItem item) {
+    private OrderItemEntity toEntity(OrderItem item) {
         OrderItemEntity entity = new OrderItemEntity();
         entity.setQuantity(item.getQuantity());
-        // You'll need to implement MenuMapper for this conversion
         entity.setMenu(menuMapper.toEntity(item.getMenu()));
         return entity;
     }

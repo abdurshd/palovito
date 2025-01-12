@@ -129,4 +129,8 @@ public class MenuService {
     public boolean existsById(String id) {
         return menuRepository.existsById(id);
     }
+
+    public void deleteAllMenus() {
+        menuRepository.deleteAll();
+    }
 } 

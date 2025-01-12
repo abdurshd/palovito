@@ -51,11 +51,11 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
 
     try {
       const category = categories.find(c => c.id === formData.categoryId);
-      if (!category) throw new Error('Category not found');
+      if (!category) throw new Error('Choose a category');
 
       await onSave({
         ...formData,
-        category,
+        categoryId: category.id,
         allergens: formData.allergens.split(',').map(a => a.trim()).filter(Boolean)
       });
 
@@ -126,7 +126,7 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label htmlFor="price" className="text-sm font-medium">Price ($)</label>
+              <label htmlFor="price" className="text-sm font-medium">Price (₩) </label>
               <Input
                 id="price"
                 type="number"
@@ -134,9 +134,9 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
                 value={formData.price}
                 onChange={(e) => setFormData(prev => ({ ...prev, price: parseFloat(e.target.value) }))}
                 required
-                min="0.01"
-                max="999999.99"
-                step="0.01"
+                min="1000"
+                max="99999999"
+                step="100"
               />
             </div>
             <div className="space-y-2">
@@ -226,6 +226,7 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
                   required
                   min="0"
                   max="9999"
+                  step="1"
                 />
               </div>
               <div className="space-y-2">
@@ -242,7 +243,7 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
                   required
                   min="0"
                   max="999"
-                  step="0.1"
+                  step="1"
                 />
               </div>
               <div className="space-y-2">
@@ -259,7 +260,7 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
                   required
                   min="0"
                   max="999"
-                  step="0.1"
+                  step="1"
                 />
               </div>
               <div className="space-y-2">
@@ -276,7 +277,7 @@ export function MenuAddForm({ open, onOpenChange, onSave, categories }: MenuForm
                   required
                   min="0"
                   max="999"
-                  step="0.1"
+                  step="1"
                 />
               </div>
             </div>

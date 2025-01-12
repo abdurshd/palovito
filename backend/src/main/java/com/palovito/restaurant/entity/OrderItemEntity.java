@@ -16,4 +16,8 @@ public class OrderItemEntity {
     private MenuEntity menu;
     
     private int quantity;
+    
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private OrderEntity order;
 } 

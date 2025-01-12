@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -80,7 +80,7 @@ class OrderControllerTest {
             .id("order1")
             .status(OrderStatus.RECEIVED)
             .items(Arrays.asList(orderItem))
-            .timestamp(Instant.now().toString())
+            .timestamp(LocalDateTime.now().toString())
             .total(30000.0)
             .build();
 
@@ -104,14 +104,14 @@ class OrderControllerTest {
                 .id("1")
                 .status(OrderStatus.RECEIVED)
                 .items(new ArrayList<>())
-                .timestamp(Instant.now().toString())
+                .timestamp(LocalDateTime.now().toString())
                 .total(25000.0)
                 .build(),
             Order.builder()
                 .id("2")
                 .status(OrderStatus.PROCESSING)
                 .items(new ArrayList<>())
-                .timestamp(Instant.now().toString())
+                .timestamp(LocalDateTime.now().toString())
                 .total(35000.0)
                 .build()
         );
@@ -136,7 +136,7 @@ class OrderControllerTest {
             .id(orderId)
             .status(OrderStatus.PROCESSING)
             .items(new ArrayList<>())
-            .timestamp(Instant.now().toString())
+            .timestamp(LocalDateTime.now().toString())
             .total(0.0)
             .build();
 
@@ -159,7 +159,7 @@ class OrderControllerTest {
             .id(orderId)
             .status(OrderStatus.CANCELLED)
             .items(new ArrayList<>())
-            .timestamp(Instant.now().toString())
+            .timestamp(LocalDateTime.now().toString())
             .total(0.0)
             .build();
 

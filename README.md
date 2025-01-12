@@ -196,4 +196,3 @@ npm run test:e2e:ui # Display UI during test execution
 - The system uses real-time communication for order updates.
 - Both frontend applications use the same UI component library for consistency.
 - The application is divided into two frontend applications for restaurant use: one for customers and one for administrators.
-

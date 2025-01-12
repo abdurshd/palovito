@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.palovito.restaurant")
 @EnableScheduling
 @EnableWebSecurity
 @EnableRedisRepositories

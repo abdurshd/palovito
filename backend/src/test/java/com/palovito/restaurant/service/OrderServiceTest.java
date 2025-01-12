@@ -19,7 +19,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -81,12 +81,11 @@ class OrderServiceTest {
     void updateOrderStatus_ShouldUpdateStatusAndNotifyClients() {
         // Given
         String orderId = "order1";
-        String timestamp = Instant.now().toString();
         Order existingOrder = Order.builder()
             .id(orderId)
             .status(OrderStatus.RECEIVED)
             .items(new ArrayList<>())
-            .timestamp(timestamp)
+            .timestamp(LocalDateTime.now().toString())
             .total(0.0)
             .build();
         
@@ -99,7 +98,7 @@ class OrderServiceTest {
         // Then
         assertThat(result).isNotNull();
         assertThat(result.getStatus()).isEqualTo(OrderStatus.PROCESSING);
-        assertThat(result.getTimestamp()).isEqualTo(timestamp);
+        assertThat(result.getTimestamp()).isEqualTo(LocalDateTime.now().toString());
         verify(messagingTemplate).convertAndSend(eq("/topic/orders/update"), any(Order.class));
     }
 } 
