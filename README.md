@@ -7,6 +7,7 @@ A full-stack restaurant order management system with real-time updates, comprisi
 - Admin Dashboard (Frontend)
 - Customer Application
 - Backend Service
+- Database (PostgreSQL) and Redis in Docker for better portability and scalability
 
 ## Tech Stack
 
@@ -83,11 +84,13 @@ A full-stack restaurant order management system with real-time updates, comprisi
 1. Prerequisites:
    - JDK 17 or higher
    - Gradle 7.x or higher
+   - Docker for running the database and Redis
 
-2. Run the application:
+2. Running the db, redis and the application:
 
 ```sh
 cd backend
+docker-compose up -d
 ./gradlew bootRun
 ```
 
