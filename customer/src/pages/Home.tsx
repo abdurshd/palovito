@@ -7,7 +7,7 @@ export function Home() {
 
   return (
     <div className="text-center space-y-8">
-      <h1 className="text-4xl font-bold text-gray-900">Welcome to RGT Restaurant</h1>
+      <h1 className="text-4xl font-bold text-gray-900">Welcome to Palovito Restaurant</h1>
       <p className="text-xl text-gray-600 max-w-2xl mx-auto">
         Experience the finest dining with our carefully curated menu. Order online for pickup or delivery.
       </p>

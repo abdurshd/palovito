@@ -59,7 +59,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 </SheetContent>
               </Sheet>
               <Link to="/" className="font-bold text-xl text-gray-900 ml-2 md:ml-0">
-                RGT Restaurant
+              Palovito Restaurant
               </Link>
             </div>
             
@@ -90,7 +90,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <footer className="bg-white border-t mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <p className="text-center text-gray-500">
-            © {new Date().getFullYear()} RGT Restaurant. All rights reserved.
+            © {new Date().getFullYear()} Palovito Restaurant. All rights reserved.
           </p>
         </div>
       </footer>

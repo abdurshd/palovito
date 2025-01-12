@@ -1,105 +1,105 @@
-# 레스토랑 주문 처리 시스템
+# Restaurant Order Management System
 
-## 시스템 개요
+## System Overview
 
-실시간 업데이트가 가능한 풀스택 레스토랑 주문 관리 시스템으로, 다음 세 가지 주요 구성 요소로 이루어져 있습니다:
+A full-stack restaurant order management system with real-time updates, comprising the following key components:
 
-- 관리자 대시보드 (프론트엔드)
-- 고객용 애플리케이션
-- 백엔드 서비스
+- Admin Dashboard (Frontend)
+- Customer Application
+- Backend Service
 
-## 기술 스택
+## Tech Stack
 
-### 백엔드 (Spring Boot)
+### Backend (Spring Boot)
 
 - Java 17
 - Spring Boot 3.2.3
 - Spring Security
 - Spring WebSocket
-- JUnit 5 & Mockito 테스팅
-- Lombok (보일러플레이트 코드 감소)
-- Actuator & Prometheus 모니터링
+- JUnit 5 & Mockito for testing
+- Lombok (to reduce boilerplate code)
+- Actuator & Prometheus for monitoring
 
-### 관리자 대시보드 (프론트엔드)
-
-- React 18.3
-- TypeScript 5.6
-- Vite 6.0
-- TailwindCSS 3.4
-- Radix UI 컴포넌트
-- Playwright E2E 테스팅
-- STOMP WebSocket 클라이언트
-- ShadcnUI 컴포넌트
-
-### 고객용 애플리케이션
+### Admin Dashboard (Frontend)
 
 - React 18.3
 - TypeScript 5.6
 - Vite 6.0
 - TailwindCSS 3.4
-- Radix UI 컴포넌트
-- STOMP WebSocket 클라이언트
-- ShadcnUI 컴포넌트
+- Radix UI components
+- Playwright E2E testing
+- STOMP WebSocket client
+- ShadcnUI components
 
-## 아키텍처 및 기능
+### Customer Application
 
-### 백엔드 아키텍처
+- React 18.3
+- TypeScript 5.6
+- Vite 6.0
+- TailwindCSS 3.4
+- Radix UI components
+- STOMP WebSocket client
+- ShadcnUI components
 
-- CRUD 작업을 위한 RESTful API 엔드포인트
-- STOMP 프로토콜을 사용한 WebSocket 통합
-- ConcurrentHashMap을 이용한 스레드 세이프 주문 처리
-- 비동기 주문 처리 시뮬레이션
-- 포괄적인 보안 구성
-- Guava를 사용한 속도 제한 구현
-- 캐싱 지원
-- Spring Actuator를 통한 모니터링 엔드포인트
+## Architecture and Features
 
-### 관리자 대시보드 기능
+### Backend Architecture
 
-- 실시간 주문 관리 대시보드
-- 카테고리별 메뉴 항목 관리
-- 주문 상태 업데이트
-- 상세 주문 추적
-- 카테고리 관리
-- 반응형 디자인
-- 폼 유효성 검사
-- 오류 경계
-- Playwright를 이용한 E2E 테스팅
+- RESTful API endpoints for CRUD operations
+- WebSocket integration using STOMP protocol
+- Thread-safe order handling with ConcurrentHashMap
+- Asynchronous order processing simulation
+- Comprehensive security configuration
+- Rate limiting using Guava
+- Caching support
+- Monitoring endpoints with Spring Actuator
 
-### 고객용 애플리케이션 기능
+### Admin Dashboard Features
 
-- 메뉴 탐색 및 주문
-- 실시간 주문 상태 추적
-- 주문 내역
-- 카테고리 기반 메뉴 필터링
-- 반응형 디자인
-- 폼 유효성 검사
-- 오류 처리
+- Real-time order management dashboard
+- Category-wise menu item management
+- Order status updates
+- Detailed order tracking
+- Category management
+- Responsive design
+- Form validation
+- Error boundaries
+- E2E testing with Playwright
 
-## 애플리케이션 실행 방법
+### Customer Application Features
 
-### 백엔드
+- Menu browsing and ordering
+- Real-time order status tracking
+- Order history
+- Category-based menu filtering
+- Responsive design
+- Form validation
+- Error handling
 
-1. 사전 요구사항:
-   - JDK 17 이상
-   - Gradle 7.x 이상
+## Application Setup
 
-2. 애플리케이션 실행:
+### Backend
+
+1. Prerequisites:
+   - JDK 17 or higher
+   - Gradle 7.x or higher
+
+2. Run the application:
 
 ```sh
 cd backend
 ./gradlew bootRun
 ```
 
-서버는 `http://localhost:8080`에서 시작됩니다
+The server will start at `http://localhost:8080`.
 
-### 관리자 대시보드
+### Admin Dashboard
 
-1. 사전 요구사항:
-   - Node.js 18.x 이상
-   - npm 9.x 이상
+1. Prerequisites:
+   - Node.js 18.x or higher
+   - npm 9.x or higher
 
-2. 애플리케이션 실행 방법:
+2. Run the application:
 
 ```sh
 cd frontend
@@ -107,15 +107,15 @@ npm install
 npm run dev
 ```
 
-관리자 대시보드는 `http://localhost:5173`에서 실행됩니다
+The admin dashboard will be available at `http://localhost:5173`.
 
-### 고객용 애플리케이션
+### Customer Application
 
-1. 사전 요구사항:
-   - Node.js 18.x 이상
-   - npm 9.x 이상
+1. Prerequisites:
+   - Node.js 18.x or higher
+   - npm 9.x or higher
 
-2. 애플리케이션 실행 방법:
+2. Run the application:
 
 ```sh
 cd customer
@@ -123,39 +123,39 @@ npm install
 npm run dev
 ```
 
-고객용 애플리케이션은 `http://localhost:5174`에서 실행됩니다
+The customer application will be available at `http://localhost:5174`.
 
-## 테스트
+## Testing
 
-### 백엔드 테스트
+### Backend Testing
 
-단위 및 통합 테스트 실행:
+Run unit and integration tests:
 
 ```sh
 cd backend
 ./gradlew test
 ```
 
-### 관리자 대시보드 테스트
+### Admin Dashboard Testing
 
-테스트를 실행하기 위해서는 playwright 브라우저가 설치되어 있어야 하며, 테스트를 실행할 때 자동으로 설치됩니다. 그러나 테스트를 실행하기 전에 많은 시간을 기다리고 싶지 않다면 브라우저를 수동으로 먼저 설치하는 것이 좋습니다. 다음은 수동 설치 명령입니다:
+Before running tests, ensure that the Playwright browser is installed. While the required browser is installed automatically during test execution, you can install it manually to save time:
 
 ```sh
 cd frontend
 npx playwright install
 ```
 
-E2E 테스트 실행:
+Run E2E tests:
 
 ```sh
 cd frontend
-npm run test:e2e # 헤드리스 모드로 테스트 실행
-npm run test:e2e:ui # 테스트 실행 시 UI 표시
+npm run test:e2e # Run tests in headless mode
+npm run test:e2e:ui # Display UI during test execution
 ```
 
-## 개발 요구사항
+## Development Requirements
 
-### 중요 패키지 버전
+### Key Package Versions
 
 - Node.js: ≥ 18.x
 - Java: ≥ 17
@@ -165,31 +165,32 @@ npm run test:e2e:ui # 테스트 실행 시 UI 표시
 - TailwindCSS: ^3.4.17
 - Spring Boot: 3.2.3
 
-### 개발 도구
+### Development Tools
 
-- TypeScript 지원 통합 개발 환경 (VS Code 권장)
-- Java 통합 개발 환경 (IntelliJ IDEA 권장)
+- TypeScript-supported IDE (recommended: VS Code)
+- Java IDE (recommended: IntelliJ IDEA)
 - Git
-- Postman 또는 유사한 API 테스트 도구
-- 테스트를 위한 WebSocket 클라이언트 (예: WebSocket King)
+- Postman or similar API testing tool
+- WebSocket client for testing (e.g., WebSocket King)
 
 ### Environment Setup
 
-1. Node.js 및 npm 설치
-2. JDK 17 설치
-3. Gradle 설치
-4. JAVA_HOME 환경 변수 설정
-5. 권장 IDE 확장 프로그램 설치:
+1. Install Node.js and npm.
+2. Install JDK 17.
+3. Install Gradle.
+4. Set up the `JAVA_HOME` environment variable.
+5. Install recommended IDE extensions:
    - ESLint
    - Prettier
    - TypeScript and JavaScript Language Features
    - Tailwind CSS IntelliSense
 
-## 추가 참고사항
+## Additional Notes
 
-- 백엔드는 개발 환경에서 인메모리 스토리지를 사용합니다
-- WebSocket 연결은 로컬 개발 환경에 구성되어 있습니다
-- CORS는 로컬 개발 환경에 구성되어 있습니다
-- 시스템은 주문 업데이트를 위해 실시간 통신을 사용합니다
-- 두 개의 프런트엔드 애플리케이션은 일관성을 위해 동일한 UI 컴포넌트 라이브러리를 사용합니다
-- 이 애플리케이션은 레스토랑에서 사용되므로 고객용 및 관리자용 두 개의 프런트엔드 애플리케이션으로 나뉘어 있습니다
+- The backend uses in-memory storage in the development environment.
+- WebSocket connections are configured for local development.
+- CORS is configured for local development.
+- The system uses real-time communication for order updates.
+- Both frontend applications use the same UI component library for consistency.
+- The application is divided into two frontend applications for restaurant use: one for customers and one for administrators.
+

@@ -18,7 +18,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <footer className="bg-white border-t">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <p className="text-center text-gray-500">
-              © {new Date().getFullYear()} RGT Restaurant. All rights reserved.
+              © {new Date().getFullYear()} Palovito. All rights reserved.
             </p>
           </div>
         </footer>

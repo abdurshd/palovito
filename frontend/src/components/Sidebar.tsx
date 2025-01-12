@@ -81,7 +81,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
       }`}>
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between p-4">
-            {isOpen && <h1 className="text-xl font-bold">RGT Restaurant</h1>}
+            {isOpen && <h1 className="text-xl font-bold">Palovito Restaurant</h1>}
             <button
               onClick={onToggle}
               className="p-2 rounded-lg hover:bg-gray-100"
