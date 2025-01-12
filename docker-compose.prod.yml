@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: restaurant_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    image: gcr.io/${PROJECT_ID}/restaurant-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/restaurant_db
+      SPRING_REDIS_HOST: redis
+      DB_PASSWORD: ${DB_PASSWORD}
+      SPRING_CLOUD_GCP_PROJECT_ID: ${PROJECT_ID}
+    labels:
+      com.google.cloud.monitoring.enabled: "true"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend:
+    image: gcr.io/${PROJECT_ID}/restaurant-frontend
+    ports:
+      - "80:5173"
+    environment:
+      VITE_API_URL: http://backend:8080/api
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  customer:
+    image: gcr.io/${PROJECT_ID}/restaurant-customer
+    ports:
+      - "81:5174"
+    environment:
+      VITE_API_URL: http://backend:8080/api
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data: 
