@@ -86,44 +86,17 @@ A full-stack restaurant order management system with real-time updates, comprisi
    - Gradle 7.x or higher
    - Docker for running the postgres, redis and the application
 
-2. Running the db, redis and the application:
+2. Running the db, redis and the application alltogether (docker-compose.yml):
+
+! keep in mind that the docker engine must be running
 
 ```sh
-cd backend
 docker-compose up -d
 ```
 
 The server will start at `http://localhost:8080`.
 
-### Admin Dashboard
-
-1. Prerequisites:
-   - Node.js 18.x or higher
-   - npm 9.x or higher
-
-2. Run the application:
-
-```sh
-cd frontend
-npm install
-npm run dev
-```
-
 The admin dashboard will be available at `http://localhost:5173`.
-
-### Customer Application
-
-1. Prerequisites:
-   - Node.js 18.x or higher
-   - npm 9.x or higher
-
-2. Run the application:
-
-```sh
-cd customer
-npm install
-npm run dev
-```
 
 The customer application will be available at `http://localhost:5174`.
 
@@ -163,14 +136,13 @@ npm run test:e2e:ui # Display UI during test execution
 - Java: ≥ 17
 - React: 18.3.x
 - TypeScript: ~5.6.2
-- Vite: ^6.0.3
+- Vite: ^6.1.0
 - TailwindCSS: ^3.4.17
 - Spring Boot: 3.2.3
 
 ### Development Tools
 
 - TypeScript-supported IDE (recommended: VS Code)
-- Java IDE (recommended: IntelliJ IDEA)
 - Git
 - Postman or similar API testing tool
 - WebSocket client for testing (e.g., WebSocket King)
