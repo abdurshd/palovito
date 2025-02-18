@@ -5,7 +5,7 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copy package files
-COPY package.json package-lock.json ./
+COPY package*.json ./
 
 # Install dependencies
 RUN npm install
@@ -20,4 +20,4 @@ RUN npm run build
 EXPOSE 5174
 
 # Start the application
-CMD ["npm", "run", "dev"] 
+CMD ["npm", "run", "dev","--","--host"] 

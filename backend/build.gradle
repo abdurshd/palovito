@@ -66,16 +66,16 @@ dependencies {
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 	
 	// Add Google Cloud Spring dependencies from new location
-	implementation platform('com.google.cloud:spring-cloud-gcp-dependencies:5.0.0')
-	implementation 'com.google.cloud:spring-cloud-gcp-starter'
-	implementation 'com.google.cloud:spring-cloud-gcp-starter-metrics'
+	// implementation platform('com.google.cloud:spring-cloud-gcp-dependencies:5.0.0')
+	// implementation 'com.google.cloud:spring-cloud-gcp-starter'
+	// implementation 'com.google.cloud:spring-cloud-gcp-starter-metrics'
 }
 
-dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:2023.0.1"
-	}
-}
+// dependencyManagement {
+// 	imports {
+// 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:2023.0.1"
+// 	}
+// }
 
 tasks.withType(Test).configureEach {
 	useJUnitPlatform()

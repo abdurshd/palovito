@@ -12,7 +12,7 @@ export class WebSocketService {
     });
   }
 
-  async connect(topic: string, onMessage: (data: any) => void): Promise<void> {
+  async connect(_: string, onMessage: (data: any) => void): Promise<void> {
     return new Promise((resolve, reject) => {
       this.client.onConnect = () => {
         console.log('Connected to WebSocket');

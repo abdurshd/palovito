@@ -53,7 +53,7 @@ export function MenuEditForm({ menu, open, onOpenChange, onSave, categories }: M
         name: menu?.name,
         description: menu?.description,
         price: menu?.price,
-        categoryId: menu?.category?.id,
+        categoryId: menu?.category?.id || '',
         imageUrl: menu?.imageUrl,
         bestSeller: menu?.bestSeller,
         available: menu?.available,

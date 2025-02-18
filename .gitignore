@@ -1,0 +1,52 @@
+
+# Backend
+/backend/build
+/backend/gradle
+/backend/gradlew
+/backend/gradlew.bat
+/backend/settings.gradle
+/backend/build.gradle
+/backend/logs/*
+
+# Frontend
+/frontend/node_modules
+/frontend/dist
+/frontend/build
+
+# Customer
+/customer/build
+/customer/node_modules
+/customer/dist
+/customer/build
+
+# Environment variables
+# Backend
+/backend/.env
+/backend/.env.local
+/backend/.env.development.local
+/backend/.env.test.local
+/backend/.env.production.local
+/backend/.env.development
+/backend/.env.test
+/backend/.env.production
+
+# Frontend
+/frontend/.env
+/frontend/.env.local
+/frontend/.env.development.local
+/frontend/.env.test.local
+/frontend/.env.production.local
+/frontend/.env.development
+/frontend/.env.test
+/frontend/.env.production
+
+# Customer
+/customer/.env
+/customer/.env.local
+/customer/.env.development.local
+/customer/.env.test.local
+/customer/.env.production.local
+/customer/.env.development
+/customer/.env.test
+/customer/.env.production
+

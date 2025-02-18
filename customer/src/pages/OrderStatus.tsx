@@ -11,7 +11,7 @@ export function OrderStatus() {
   const [order, setOrder] = useState<Order | null>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
-  const [wsConnected, setWsConnected] = useState(false);
+  const [_, setWsConnected] = useState(false);
 
   useEffect(() => {
     if (!orderId) {
